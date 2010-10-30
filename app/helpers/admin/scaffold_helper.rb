@@ -1,0 +1,2 @@
+module Admin::ScaffoldHelper
+end
