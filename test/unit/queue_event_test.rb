@@ -2,6 +2,14 @@ require 'test_helper'
 
 class QueueEventTest < ActiveSupport::TestCase
 
+  setup do
+    
+  end
+
+  teardown do
+    
+  end
+
   test "must have source" do
     qe = QueueEvent.new
     qe.name = "Hello World"

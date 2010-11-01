@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::ScaffoldControllerTest < ActionController::TestCase
+class QueueControllerTest < ActionController::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true

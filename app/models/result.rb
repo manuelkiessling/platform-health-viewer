@@ -1,31 +1,42 @@
 class Result
-  def get_by_tagname(tagname)
+
+  def self.find(sources, names, event_type_class)
     results = []
-    tag = get_tag_by_name(tagname)
-    if (!tag.event_sources.empty?)
-      tag.event_sources.each do |event_source|
-        if (!tag.event_names.empty?)
-          tag.event_names.each do |event_name|
-            results = results | Event.by_source_and_name(:key => [event_source, event_name])
+    if (!sources.empty?)
+      sources.each do |source|
+        if (!names.empty?)
+          names.each do |name|
+            event_type = event_type_class.find(:first, :conditions => { :source => source, :name => name })
+            if (!event_type.nil?) then
+              event_type.events.each do |event|
+                results = results | [ "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
+              end
+            end
           end
         else
-          results = results | Event.by_source(:key => event_source)
+          event_types = event_type_class.find(:all, :conditions => { :source => source })
+          event_types.each do |event_type|
+            if (!event_type.nil?) then
+              event_type.events.each do |event|
+                results = results | [ "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
+              end
+            end
+          end
         end
       end
     else
-      tag.event_names.each do |event_name|
-        results = results | Event.by_name(:key => event_name)
+      names.each do |name|
+        event_types = event_type_class.find(:all, :conditions => { :name => name })
+        event_types.each do |event_type|
+          if (!event_type.nil?) then
+            event_type.events.each do |event|
+              results = results | [ "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
+            end
+          end
+        end
       end
     end
     results
-    #results.sort_by { |result| result[:timestamp] }
   end
 
-  def get_tag_by_name(name)
-    get_tag_from_array(Tag.by_name(:key => name))
-  end
-
-  def get_tag_from_array (tag_array)
-    Tag.find(tag_array[0]["_id"])
-  end
 end

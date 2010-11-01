@@ -1,9 +1,10 @@
 HealthView::Application.routes.draw do
   get "playground/get_result"
   get "playground/find_event"
-  get "playground/create_event"
+  get "playground/create_queue_events"
   get "playground/create_other_events"
   get "playground/create_tag"
+  get "queue/show"
 
   namespace :admin do
     resources :scaffold
