@@ -12,4 +12,11 @@ class Tag < CouchRest::Model::Base
     tag = Tag.find(tags[0]["_id"])
     tag.event_sources
   end
+
+  def self.names_for_tagname(tagname)
+    tags = Tag.by_name(:name => tagname)
+    tag = Tag.find(tags[0]["_id"])
+    tag.event_names
+  end
+
 end

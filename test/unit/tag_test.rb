@@ -7,6 +7,8 @@ class TagTest < ActiveSupport::TestCase
     t.name = "TESTcrons"
     t.event_sources << "TESTcron01"
     t.event_sources << "TESTcron02"
+    t.event_names << "cpu_load"
+    t.event_names << "free_mem"
     t.save
   end
 
@@ -21,6 +23,13 @@ class TagTest < ActiveSupport::TestCase
   test "must return array with sources" do
     actual = Tag.sources_for_tagname("TESTcrons")
     expected = ["TESTcron01", "TESTcron02"]
+
+    assert_equal(expected, actual)
+  end
+
+  test "must return array with names" do
+    actual = Tag.names_for_tagname("TESTcrons")
+    expected = ["cpu_load", "free_mem"]
 
     assert_equal(expected, actual)
   end
