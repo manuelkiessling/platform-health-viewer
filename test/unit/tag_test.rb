@@ -4,6 +4,7 @@ class TagTest < ActiveSupport::TestCase
 
   setup do
     teardown
+    
     t = Tag.new
     t.name = "TESTcrons"
     t.event_sources << "TESTcron01"
