@@ -3,35 +3,53 @@ body {
 }
 
 .tag {
-	border-color: #ffe2c9;
+	padding-left: 8px;
+	padding-bottom: 16px;
+	padding-right: 8px;
+	padding-top: 8px;
+	border-left-width: 1px;
+	border-bottom-width: 0px;
+	border-right-width: 1px;
+	border-top-width: 1px;
+	margin-bottom: 8px;
+	border-color: #e5e5e5;
 	min-width: 100px;
-	display: inline-block;
-	margin: 16px;
+    width: 50%;
+	display: block;
 	border-style: none;
-	border-width: 0px;
-	padding: 16px;
-	background-color: #fffdaa;
+	background-color: #f2f2f2;
 }
 
 .tag h2 {
-	margin-left: -25px;
+	border-color: #bfbfbf;
+	color: #70a2ff;
+	border-left-width: 0px;
+	border-bottom-width: 1px;
+	border-right-width: 0px;
+	border-top-width: 0px;
+	margin-left: 0px;
 	margin-bottom: 0px;
 	margin-right: 0px;
-	margin-top: -25px;
-	border-width: 1px;
+	margin-top: 0px;
 	border-style: dotted;
-	display: inline;
-	background-color: white;
+	display: block;
 	font-size: 12pt;
-	padding: 16px;
+	padding: 0px;
 }
 
 .content h3 {
+	display: inline;
 	font-size: 10pt;
 }
 
-.content .subtags,.sources,.names .element {
+.content .elements {
 	display: inline;
+}
+
+.content .elements .element {
+	margin: 2px;
+	font-size: 10pt;
+	display: inline-block;
 	padding: 8px;
-	background-color: #8eb7ff;
+	background-color: #ffffd1;
 }
