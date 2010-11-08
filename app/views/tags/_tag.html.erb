@@ -1,0 +1,15 @@
+<%= div_for tag do %>
+  <strong><%= tag.name %></strong><br />
+
+  Event sources:
+  <% tag.event_sources.each do |event_source| %>
+    <%= event_source %>
+  <% end %>
+
+  <br />
+
+  Event names:
+  <% tag.event_names.each do |event_name| %>
+    <%= event_name %>
+  <% end %>
+<% end %>

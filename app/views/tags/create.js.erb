@@ -1,0 +1,8 @@
+$("#notice").html('<%= escape_javascript(flash.delete(:notice)) %>');
+
+$("#tags").append('<%= escape_javascript(render(@tag)) %>');
+
+$("#tag_<%= @tag.id %>").hide();
+$("#tag_<%= @tag.id %>").fadeIn(2000);
+
+$("#new_tag")[0].reset();

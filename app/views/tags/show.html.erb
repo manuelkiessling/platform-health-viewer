@@ -1,0 +1,18 @@
+<h2>Tag list</h2>
+<div id="tags">
+  <%= render :partial => @tags, :locals => { :list => true } %>
+</div>
+
+<hr />
+
+<div id="notice"></div>
+
+<% form_for Tag.new, :remote => true do |f| %>
+  <%= f.label :name, "Tag name: " %>
+  <%= f.text_field :name %><br />
+  <%= f.label :event_sources, "Event sources: " %>
+  <%= f.text_field :event_sources %><br />
+  <%= f.label :event_names, "Event names: " %>
+  <%= f.text_field :event_names %><br />
+  <%= f.submit "Add tags" %>
+<% end %>

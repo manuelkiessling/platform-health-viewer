@@ -4,12 +4,14 @@ HealthView::Application.routes.draw do
   get "playground/create_queue_events"
   get "playground/create_other_events"
   get "playground/create_tag"
-  get "queue/show"
+  get "queue/events"
+  post "queue/events"
+  get "queue/search"
+  get "tags/index"
 
-  namespace :admin do
-    resources :scaffold
-  end
-  
+  resource :tags
+    root :to => "tags#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

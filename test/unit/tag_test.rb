@@ -77,14 +77,14 @@ class TagTest < ActiveSupport::TestCase
     assert_equal(expected, actual)
   end
 
-  test "must return array with sources for meta tag" do
+  test "must return array with sources for meta tags" do
     actual = Tag.sources_for_tagname("TESTmeta")
     expected = ["TESTcron01", "TESTcron02", "TESTweb01", "TESTweb04"]
 
     assert_equal(expected, actual)
   end
 
-  test "must return array with names for meta tag" do
+  test "must return array with names for meta tags" do
     actual = Tag.names_for_tagname("TESTmeta")
     expected = ["cpu_load", "free_mem", "free_space"]
 
