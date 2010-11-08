@@ -1,15 +1,34 @@
 <%= div_for tag do %>
-  <strong><%= tag.name %></strong><br />
 
-  Event sources:
-  <% tag.event_sources.each do |event_source| %>
-    <%= event_source %>
-  <% end %>
+  <h2 class="name"><%= tag.name %></h2>
 
-  <br />
+  <div class="content">
+    <% if (!tag.tags.empty?) then %>
 
-  Event names:
-  <% tag.event_names.each do |event_name| %>
-    <%= event_name %>
-  <% end %>
+      <h3>Tags:</h3>
+      <div class="subtags">
+        <% tag.tags.each do |subtag| %>
+          <span class="element"><%= subtag %></span>
+        <% end %>
+      </div>
+
+    <% else %>
+
+      <h3>Event sources:</h3>
+      <div class="sources">
+        <% tag.event_sources.each do |event_source| %>
+          <span class="element"><%= event_source %></span>
+        <% end %>
+      </div>
+
+      <h3>Event names:</h3>
+      <div class="names">
+        <% tag.event_names.each do |event_name| %>
+          <span class="element"><%= event_name %></span>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+
 <% end %>

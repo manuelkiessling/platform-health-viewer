@@ -1,0 +1,37 @@
+body {
+	font-family: Arial, sans-serif;
+}
+
+.tag {
+	border-color: #ffe2c9;
+	min-width: 100px;
+	display: inline-block;
+	margin: 16px;
+	border-style: none;
+	border-width: 0px;
+	padding: 16px;
+	background-color: #fffdaa;
+}
+
+.tag h2 {
+	margin-left: -25px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-top: -25px;
+	border-width: 1px;
+	border-style: dotted;
+	display: inline;
+	background-color: white;
+	font-size: 12pt;
+	padding: 16px;
+}
+
+.content h3 {
+	font-size: 10pt;
+}
+
+.content .subtags,.sources,.names .element {
+	display: inline;
+	padding: 8px;
+	background-color: #8eb7ff;
+}
