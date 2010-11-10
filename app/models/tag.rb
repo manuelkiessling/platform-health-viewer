@@ -8,11 +8,12 @@ class Tag < CouchRest::Model::Base
   view_by :name
 
   def save
+    # TODO: This should be done within CouchDB
     if (!tags.empty?) then
       tags.each do |tag|
         ts = Tag.by_name(:key => tag)
         if (ts.empty?) then
-          raise Exception.new("No tag by that name, can't add to metatag")
+          raise Exception.new("No tag by the name '" + tag + "', can't add to metatag")
         end
       end
     end

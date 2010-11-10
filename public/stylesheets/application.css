@@ -1,5 +1,7 @@
 body {
-	font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  padding-left: 40px;
+  padding-top: 40px;
 }
 
 #tags {
@@ -33,6 +35,10 @@ body {
   border: 1px dotted #ddd;
   display: none;
   text-align: center;
+}
+
+#notice.error {
+  background-color: red;
 }
 
 .tag {

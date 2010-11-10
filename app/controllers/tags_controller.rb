@@ -1,19 +1,27 @@
 class TagsController < ApplicationController
 
+  def self.get_splitted_string(string)
+    r = []
+    string.split(",").each do |s|
+      r << s.sub(" ", "")
+    end
+    r
+  end
+
   def create
     @tag = Tag.new
     @tag.name = params[:tag][:name]
     if (!params[:tag][:tags].empty?) then
-      @tag.tags = params[:tag][:tags].sub(" ", "").split(",")
+      @tag.tags = TagsController.get_splitted_string(params[:tag][:tags])
     else
-      @tag.event_sources = params[:tag][:event_sources].sub(" ", "").split(",")
-      @tag.event_names = params[:tag][:event_names].sub(" ", "").split(",")
+      @tag.event_sources = TagsController.get_splitted_string(params[:tag][:event_sources])
+      @tag.event_names = TagsController.get_splitted_string(params[:tag][:event_names])
     end
     begin
       @tag.save
       flash[:notice] = "Tag created"
-    rescue
-      flash[:error] = "Nope."
+    rescue Exception => e
+      flash[:error] = "Error: " + e.message
     end
 
     respond_to do |format|
