@@ -14,27 +14,26 @@
         </div>
       </div>
 
-    <% else %>
-
-      <div class="elements_block">
-        <h3>Event sources:</h3>
-        <div class="elements sources">
-          <% tag.event_sources.each do |event_source| %>
-            <span class="element"><%= event_source %></span>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="elements_block">
-        <h3>Event names:</h3>
-        <div class="elements names">
-          <% tag.event_names.each do |event_name| %>
-            <span class="element"><%= event_name %></span>
-          <% end %>
-        </div>
-      </div>
-
     <% end %>
+
+    <div class="elements_block">
+      <h3>Event sources:</h3>
+      <div class="elements sources">
+        <% tag.resolved_event_sources.each do |event_source| %>
+          <span class="element"><%= event_source %></span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="elements_block">
+      <h3>Event names:</h3>
+      <div class="elements names">
+        <% tag.resolved_event_names.each do |event_name| %>
+          <span class="element"><%= event_name %></span>
+        <% end %>
+      </div>
+    </div>
+
   </div>
 
 <% end %>

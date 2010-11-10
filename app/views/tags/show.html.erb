@@ -1,22 +1,27 @@
 <h1>Manage Tags</h1>
+
 <div id="tags">
   <%= render :partial => @tags, :locals => { :list => true } %>
 </div>
 
-<hr />
+<div id="formarea">
 
-<div id="notice"><%=h flash[:notice] %></div>
+  <div id="form">
+    <%= form_for Tag.new, :remote => true do |f| %>
+      <strong>
+        <%= f.label :name, "Tag name: " %><br />
+      </strong>
+      <%= f.text_field :name %><br />
+      <br />
+      <%= f.label :tags, "Tags: " %><br />
+      <%= f.text_field :tags %><br />
+      <%= f.label :event_sources, "Event sources: " %><br />
+      <%= f.text_field :event_sources %><br />
+      <%= f.label :event_names, "Event names: " %><br />
+      <%= f.text_field :event_names %><br />
+      <%= f.submit "Add tag" %>
+    <% end %>
+  </div>
+  <div id="notice"><%=h flash[:notice] %></div>
 
-<% form_for Tag.new, :remote => true do |f| %>
-  <%= f.label :name, "Tag name: " %>
-  <%= f.text_field :name %><br />
-  <br />
-  <%= f.label :tags, "Tags, comma separated: " %>
-  <%= f.text_field :tags %><br />
-  - or -<br />
-  <%= f.label :event_sources, "Event sources, comma separated: " %>
-  <%= f.text_field :event_sources %><br />
-  <%= f.label :event_names, "Event names, comma separated: " %>
-  <%= f.text_field :event_names %><br />
-  <%= f.submit "Add tag" %>
-<% end %>
+</div>

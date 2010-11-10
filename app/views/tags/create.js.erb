@@ -1,4 +1,9 @@
+$("#notice").hide();
 $("#notice").html('<%= escape_javascript(flash.delete(:notice)) %>');
+$("#notice").fadeIn(2000);
+$("#notice").fadeOut(2000);
+
+// TODO: scroll to bottom
 
 $("#tags").append('<%= escape_javascript(render(@tag)) %>');
 

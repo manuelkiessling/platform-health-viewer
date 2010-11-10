@@ -7,6 +7,26 @@ class Tag < CouchRest::Model::Base
 
   view_by :name
 
+  def save
+    if (!tags.empty?) then
+      tags.each do |tag|
+        ts = Tag.by_name(:key => tag)
+        if (ts.empty?) then
+          raise Exception.new("No tag by that name, can't add to metatag")
+        end
+      end
+    end
+    super
+  end
+
+  def resolved_event_names
+    Tag.names_for_tagname(name)
+  end
+
+  def resolved_event_sources
+    Tag.sources_for_tagname(name)
+  end
+
   def self.sources_for_tagname(tagname)
     tags = Tag.by_name(:key => tagname)
     tag = Tag.find(tags[0]["_id"])

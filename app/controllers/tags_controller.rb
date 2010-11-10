@@ -9,8 +9,13 @@ class TagsController < ApplicationController
       @tag.event_sources = params[:tag][:event_sources].sub(" ", "").split(",")
       @tag.event_names = params[:tag][:event_names].sub(" ", "").split(",")
     end
-    @tag.save
-    flash[:notice] = "Tag created"
+    begin
+      @tag.save
+      flash[:notice] = "Tag created"
+    rescue
+      flash[:error] = "Nope."
+    end
+
     respond_to do |format|
       format.html { redirect_to tags_path }
       format.js

@@ -69,7 +69,7 @@ class TagTest < ActiveSupport::TestCase
 
     assert_equal(expected, actual)
   end
-
+  
   test "must return array with names" do
     actual = Tag.names_for_tagname("TESTcrons")
     expected = ["cpu_load", "free_mem"]
@@ -77,18 +77,44 @@ class TagTest < ActiveSupport::TestCase
     assert_equal(expected, actual)
   end
 
-  test "must return array with sources for meta tags" do
+  test "must return array with sources for metatag name" do
     actual = Tag.sources_for_tagname("TESTmeta")
     expected = ["TESTcron01", "TESTcron02", "TESTweb01", "TESTweb04"]
 
     assert_equal(expected, actual)
   end
 
-  test "must return array with names for meta tags" do
+  test "must return array with names for metatag name" do
     actual = Tag.names_for_tagname("TESTmeta")
     expected = ["cpu_load", "free_mem", "free_space"]
 
     assert_equal(expected, actual)
+  end
+
+  test "must return array with sources for metatag instance" do
+    t = Tag.by_name(:key => "TESTmeta")
+    t = Tag.find(t[0]["_id"])
+    actual = t.resolved_event_sources
+    expected = ["TESTcron01", "TESTcron02", "TESTweb01", "TESTweb04"]
+
+    assert_equal(expected, actual)
+  end
+
+  test "must return array with names for metatag instance" do
+    t = Tag.by_name(:key => "TESTmeta")
+    t = Tag.find(t[0]["_id"])
+    actual = t.resolved_event_names
+    expected = ["cpu_load", "free_mem", "free_space"]
+
+    assert_equal(expected, actual)
+  end
+
+  test "can't create metatag with non-existing tag(s)" do
+    assert_raise (Exception) do
+      t = Tag.new
+      t.tags << "idefinitelydonotexist"
+      t.save
+    end
   end
 
 end

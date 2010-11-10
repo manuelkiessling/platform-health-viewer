@@ -2,48 +2,78 @@ body {
 	font-family: Arial, sans-serif;
 }
 
+#tags {
+  width: 50%;
+  display: inline-block;
+}
+
+#formarea {
+  display: inline-block;
+  position: fixed;
+  right: 0;
+  top: 79px;
+  width: 300px;
+}
+
+#form {
+  background-color: #f5f5dc;
+  border: 1px dotted #ddd;
+  padding: 16px;
+}
+
+#form form input {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+}
+
+#notice {
+  background-color: green;
+  color: white;
+  padding: 16px;
+  border: 1px dotted #ddd;
+  display: none;
+  text-align: center;
+}
+
 .tag {
 	padding-left: 8px;
 	padding-bottom: 16px;
 	padding-right: 8px;
 	padding-top: 8px;
-	border-left-width: 1px;
-	border-bottom-width: 0px;
-	border-right-width: 1px;
-	border-top-width: 1px;
 	margin-bottom: 8px;
-	border-color: #e5e5e5;
 	min-width: 100px;
-    width: 50%;
 	display: block;
-	border-style: none;
+	border: 1px dotted #ddd;
 	background-color: #f2f2f2;
 }
 
 .tag h2 {
-	border-color: #bfbfbf;
-	color: #70a2ff;
-	border-left-width: 0px;
-	border-bottom-width: 1px;
-	border-right-width: 0px;
-	border-top-width: 0px;
+	color: #006699;
 	margin-left: 0px;
-	margin-bottom: 0px;
+	margin-bottom: 5px;
 	margin-right: 0px;
 	margin-top: 0px;
-	border-style: dotted;
 	display: block;
 	font-size: 12pt;
-	padding: 0px;
+	padding: 4px 4px 4px 0;
+}
+
+.content {
+  padding-left: 16px;
+  margin-left: 1px;
+  border-left: 4px dotted #ccc;
 }
 
 .content h3 {
 	display: inline;
 	font-size: 10pt;
+    font-weight: normal;
+    color: #888;
 }
 
 .content .elements {
 	display: inline;
+    font-family: "Courier New"
 }
 
 .content .elements .element {
