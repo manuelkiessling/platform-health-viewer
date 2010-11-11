@@ -55,7 +55,7 @@ var jQuery = function( selector, context ) {
 	// Check for digits
 	rdigit = /\d/,
 
-	// Match a standalone tags
+	// Match a standalone tag
 	rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
 
 	// JSON RegExp
@@ -133,7 +133,7 @@ jQuery.fn = jQuery.prototype = {
 				if ( match[1] ) {
 					doc = (context ? context.ownerDocument || context : document);
 
-					// If a single string is passed in and it's a single tags
+					// If a single string is passed in and it's a single tag
 					// just do a createElement and skip the rest
 					ret = rsingleTag.exec( selector );
 
@@ -987,7 +987,7 @@ return (window.jQuery = window.$ = jQuery);
 	root.insertBefore( script, root.firstChild );
 
 	// Make sure that the execution of code works by injecting a script
-	// tags with appendChild/createTextNode
+	// tag with appendChild/createTextNode
 	// (IE doesn't support this, fails, and uses .text instead)
 	if ( window[ id ] ) {
 		jQuery.support.scriptEval = true;
@@ -4594,7 +4594,7 @@ jQuery.fn.extend({
 				}
 
 				return jQuery.clean([html.replace(rinlinejQuery, "")
-					// Handle the case in IE 8 where action=/test/> self-closes a tags
+					// Handle the case in IE 8 where action=/test/> self-closes a tag
 					.replace(raction, '="$1">')
 					.replace(rleadingWhitespace, "")], ownerDocument)[0];
 			} else {

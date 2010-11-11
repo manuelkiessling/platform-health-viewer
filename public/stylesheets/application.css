@@ -1,11 +1,12 @@
 body {
   font-family: Arial, sans-serif;
   padding-left: 40px;
-  padding-top: 40px;
+  padding-top: 0px;
 }
 
 #tags {
   width: 50%;
+  margin-top: 40px;
   display: inline-block;
 }
 
@@ -13,14 +14,23 @@ body {
   display: inline-block;
   position: fixed;
   right: 0;
-  top: 79px;
-  width: 300px;
+  top: 0px;
+  width: 255px;
+  padding-top: 0px;
 }
 
 #form {
   background-color: #f5f5dc;
   border: 1px dotted #ddd;
   padding: 16px;
+  padding-top: 32px;
+}
+
+#form.droppable-state-active {
+}
+
+#form.droppable-state-hover {
+  background-color: #f1f1d8;
 }
 
 #form form input {
@@ -88,4 +98,5 @@ body {
 	display: inline-block;
 	padding: 8px;
 	background-color: #ffffd1;
+    z-index: 1;
 }

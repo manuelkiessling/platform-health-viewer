@@ -2,7 +2,7 @@ $("#notice").removeClass("error");
 $("#notice").hide();
 <% if flash[:notice] then %>
   $("#notice").html('<%= escape_javascript(flash.delete(:notice)) %>');
-  $("#tags").append('<%= escape_javascript(render(@tag)) %>');
+  $("#tags").prepend('<%= escape_javascript(render(@tag)) %>');
 
   $("#tag_<%= @tag.id %>").hide();
   $("#tag_<%= @tag.id %>").fadeIn(2000);
@@ -13,7 +13,8 @@ $("#notice").hide();
   $("#notice").html('<%= escape_javascript(flash.delete(:error)) %>');
 <% end %>
 
-$("#notice").fadeIn(800);
-$("#notice").fadeOut(6000);
+$("#notice").fadeIn(800, function() {
+  $("#notice").fadeOut(6000);
+});
 
 // TODO: scroll to bottom

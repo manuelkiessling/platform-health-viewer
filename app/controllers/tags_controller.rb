@@ -3,7 +3,9 @@ class TagsController < ApplicationController
   def self.get_splitted_string(string)
     r = []
     string.split(",").each do |s|
-      r << s.sub(" ", "")
+      if (s.sub(" ", "") != "") then
+        r << s.sub(" ", "")
+      end
     end
     r
   end
