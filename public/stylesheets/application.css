@@ -56,11 +56,19 @@ body {
 	padding-bottom: 16px;
 	padding-right: 8px;
 	padding-top: 8px;
-	margin-bottom: 8px;
+	margin-bottom: 0px;
 	min-width: 100px;
 	display: block;
 	border: 1px dotted #ddd;
 	background-color: #f2f2f2;
+    border-radius: 12px;
+    background: #f2f2f2;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f2f2f2), to(#d2d2d2));
+    background: -moz-linear-gradient(#f2f2f2, #d2d2d2);
+    -webkit-box-shadow: #d6d6d6 0px 0px 4px;
+    -moz-box-shadow: #d6d6d6 0px 0px 4px;
+    box-shadow: #d6d6d6 0px 0px 4px;
+
 }
 
 .tag h2 {
@@ -71,28 +79,28 @@ body {
 	margin-top: 0px;
 	display: block;
 	font-size: 12pt;
-	padding: 4px 4px 4px 0;
+	padding: 4px;
 }
 
-.content {
+.tag .content {
   padding-left: 16px;
   margin-left: 1px;
-  border-left: 4px dotted #ccc;
+  #border-left: 1px dotted #ccc;
 }
 
-.content h3 {
+.tag .content h3 {
 	display: inline;
 	font-size: 10pt;
     font-weight: normal;
     color: #888;
 }
 
-.content .elements {
+.tag .content .elements {
 	display: inline;
     font-family: "Courier New"
 }
 
-.content .elements .element {
+.tag .content .elements .element {
 	margin: 2px;
 	font-size: 10pt;
 	display: inline-block;
