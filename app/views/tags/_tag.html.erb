@@ -1,5 +1,4 @@
 <%= div_for tag do %>
-
   <h2 class="name"><%= tag.name %></h2>
 
   <div class="content">
@@ -34,12 +33,19 @@
       </div>
     </div>
 
-  </div>
+    <div class="eventsarea">
+      <%= link_to('Show latest events',
+                    { :controller => "tags", :action => "events", :format => "js", :tagname => tag.name, :tagid => tag.id },
+                    :method => "get",
+                    :remote => true,
+                    :complete => 'See below:',
+                    :disable_with => 'loading...'
+                   )
+      %>
 
-  <script type="text/javascript">
-    $(function() {
-      $(".element").draggable({ revert: "valid", helper: "clone" });
-    });
-  </script>
+      <pre id="events_tagid_<%= tag.id %>" class="events"></pre>
+    </div>
+
+  </div>
 
 <% end %>

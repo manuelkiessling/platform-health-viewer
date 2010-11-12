@@ -4,6 +4,16 @@ body {
   padding-top: 0px;
 }
 
+.events {
+  background-color: white;
+  font-family: "Courier New";
+  font-size: 10pt;
+  padding: 8px;
+  margin: 4px;
+  margin-top: 16px;
+  display: none;
+}
+
 #tags {
   width: 50%;
   margin-top: 40px;
@@ -14,7 +24,7 @@ body {
   display: inline-block;
   position: fixed;
   left: 52%;
-  top: 119px;
+  top: 118px;
   width: 255px;
   padding-top: 0px;
 }
@@ -22,7 +32,7 @@ body {
 #form {
   background-color: #f5f5dc;
   border-radius: 8px;
-  background: #f2f2f2;
+  background: #e7e7be;
   background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f7f7de), to(#e7e7be));
   background: -moz-linear-gradient(#f7f7de, #e7e7be);
   padding: 16px;
@@ -37,6 +47,8 @@ body {
 
 #form.droppable-state-hover {
   background-color: #f1f1d8;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f9f9e0), to(#f1f1d8));
+  background: -moz-linear-gradient(#f9f9e0, #f1f1d8);
 }
 
 #form form input {
@@ -76,6 +88,16 @@ body {
 
 }
 
+.tag .eventsarea {
+  padding-top: 16px;
+  padding-left: 4px;  
+}
+
+.tag .eventsarea a {
+  font-size: 10pt;
+  color:  #a9a9a9;
+}
+
 .tag h2 {
 	color: #006699;
 	margin-left: 0px;
@@ -96,11 +118,12 @@ body {
 	display: inline-block;
 	font-size: 10pt;
     font-weight: normal;
-    color: #444;
+    color: #222;
     width: 90px;
     padding: 6px;
     margin: 2px;
-    border: 1px dotted lightgray;
+    border-left: 1px dotted gray;
+    border-bottom: 1px dotted gray;
 }
 
 .tag .content .elements {
