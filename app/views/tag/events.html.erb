@@ -1,0 +1,6 @@
+<h1>Events for Tag</h1>
+<% if @events then %>
+  <% @events.each  do |event| %>
+    <%= event.inspect %><br />
+  <% end %>
+<% end %>

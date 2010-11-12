@@ -13,17 +13,23 @@ body {
 #formarea {
   display: inline-block;
   position: fixed;
-  right: 0;
-  top: 0px;
+  left: 52%;
+  top: 119px;
   width: 255px;
   padding-top: 0px;
 }
 
 #form {
   background-color: #f5f5dc;
-  border: 1px dotted #ddd;
+  border-radius: 8px;
+  background: #f2f2f2;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f7f7de), to(#e7e7be));
+  background: -moz-linear-gradient(#f7f7de, #e7e7be);
   padding: 16px;
   padding-top: 32px;
+  -webkit-box-shadow: #d6d6d6 0px 0px 6px;
+  -moz-box-shadow: #d6d6d6 0px 0px 6px;
+  box-shadow: #d6d6d6 0px 0px 6px;
 }
 
 #form.droppable-state-active {
@@ -41,8 +47,9 @@ body {
 #notice {
   background-color: green;
   color: white;
+  font-weight: bold;
   padding: 16px;
-  border: 1px dotted #ddd;
+  border: none;
   display: none;
   text-align: center;
 }
@@ -56,18 +63,16 @@ body {
 	padding-bottom: 16px;
 	padding-right: 8px;
 	padding-top: 8px;
-	margin-bottom: 0px;
+	margin-bottom: 10px;
 	min-width: 100px;
 	display: block;
-	border: 1px dotted #ddd;
-	background-color: #f2f2f2;
-    border-radius: 12px;
+    border-radius: 8px;
     background: #f2f2f2;
-    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f2f2f2), to(#d2d2d2));
-    background: -moz-linear-gradient(#f2f2f2, #d2d2d2);
-    -webkit-box-shadow: #d6d6d6 0px 0px 4px;
-    -moz-box-shadow: #d6d6d6 0px 0px 4px;
-    box-shadow: #d6d6d6 0px 0px 4px;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f9f9f9), to(#ececec));
+    background: -moz-linear-gradient(#f9f9f9, #ececec);
+    -webkit-box-shadow: #d6d6d6 0px 0px 6px;
+    -moz-box-shadow: #d6d6d6 0px 0px 6px;
+    box-shadow: #d6d6d6 0px 0px 6px;
 
 }
 
@@ -83,21 +88,25 @@ body {
 }
 
 .tag .content {
-  padding-left: 16px;
+  padding-left: 4px;
   margin-left: 1px;
-  #border-left: 1px dotted #ccc;
 }
 
 .tag .content h3 {
-	display: inline;
+	display: inline-block;
 	font-size: 10pt;
     font-weight: normal;
-    color: #888;
+    color: #444;
+    width: 90px;
+    padding: 6px;
+    margin: 2px;
+    border: 1px dotted lightgray;
 }
 
 .tag .content .elements {
 	display: inline;
-    font-family: "Courier New"
+    font-family: "Courier New";
+    margin-top: -1px;
 }
 
 .tag .content .elements .element {
@@ -107,4 +116,6 @@ body {
 	padding: 8px;
 	background-color: #ffffd1;
     z-index: 1;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffd1), to(#ffff81));
+    background: -moz-linear-gradient(#ffffd1, #ffff81);
 }

@@ -1,20 +1,22 @@
 $("#notice").removeClass("error");
 $("#notice").hide();
 <% if flash[:notice] then %>
-  $("#notice").html('<%= escape_javascript(flash.delete(:notice)) %>');
-  $("#tags").prepend('<%= escape_javascript(render(@tag)) %>');
-
-  $("#tag_<%= @tag.id %>").hide();
-  $("#tag_<%= @tag.id %>").fadeIn(2000);
-
   $("#new_tag")[0].reset();
+  $("#tags").prepend('<%= escape_javascript(render(@tag)) %>');
+  $("#tag_<%= @tag.id %>").hide();
+
+  $("body").scrollTo(0, 1000, { onAfter: function() {
+    $("#tag_<%= @tag.id %>").slideDown(1200);
+  }});
+
 <% else %>
   $("#notice").addClass("error");
   $("#notice").html('<%= escape_javascript(flash.delete(:error)) %>');
+  $("#notice").fadeIn(1400, function() {
+    $("#notice").fadeOut(1400, function() {
+      $("#notice").removeClass("error");
+    });
+  });
 <% end %>
-
-$("#notice").fadeIn(800, function() {
-  $("#notice").fadeOut(6000);
-});
 
 // TODO: scroll to bottom
