@@ -13,11 +13,13 @@ class EventTypeTest < ActiveSupport::TestCase
     e = Event.new
     e.event_type = et
     e.value = "0.11"
+    e.created_at = "2010-11-01 15:43:26.642887"
     e.save
 
     e = Event.new
     e.event_type = et
     e.value = "0.12"
+    e.created_at = "2010-11-01 15:43:26.642887"
     e.save
 
     et = EventType.new
@@ -28,11 +30,13 @@ class EventTypeTest < ActiveSupport::TestCase
     e = Event.new
     e.event_type = et
     e.value = "0.21"
+    e.created_at = "2010-11-01 15:43:26.642887"
     e.save
 
     e = Event.new
     e.event_type = et
     e.value = "0.22"
+    e.created_at = "2010-11-01 15:43:26.642887"
     e.save
 
     et = EventType.new
@@ -43,11 +47,13 @@ class EventTypeTest < ActiveSupport::TestCase
     e = Event.new
     e.event_type = et
     e.value = "21%"
+    e.created_at = "2010-11-01 15:43:26.642887"
     e.save
 
     e = Event.new
     e.event_type = et
     e.value = "22%"
+    e.created_at = "2010-11-01 15:43:26.642887"
     e.save
   end
 
@@ -91,8 +97,8 @@ class EventTypeTest < ActiveSupport::TestCase
   test "test find with 2 sources and 1 name" do
     actual = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], ["free_mem"])
 
-    expected = [{"source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
+    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
                ]
 
     assert_equal(expected, actual)
@@ -109,12 +115,12 @@ class EventTypeTest < ActiveSupport::TestCase
   test "find with 2 sources and no name" do
     actual = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], [])
 
-    expected = [{"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
-                {"source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
+    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
                ]
 
     assert_equal(expected, actual)
@@ -123,10 +129,10 @@ class EventTypeTest < ActiveSupport::TestCase
   test "find with no sources and 1 name" do
     actual = EventType.find_by_sources_and_names([], ["cpu_load"])
 
-    expected = [{"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"}
+    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"}
                ]
 
     assert_equal(expected, actual)
@@ -135,12 +141,12 @@ class EventTypeTest < ActiveSupport::TestCase
   test "find with no sources and 2 names" do
     actual = EventType.find_by_sources_and_names([], ["cpu_load", "free_mem"])
 
-    expected = [{"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
-                {"source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
+    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
                ]
 
     assert_equal(expected, actual)
@@ -149,12 +155,12 @@ class EventTypeTest < ActiveSupport::TestCase
   test "find with 2 sources and 2 names" do
     actual = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], ["cpu_load", "free_mem"])
 
-    expected = [{"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
-                {"source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
+    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
+                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
                ]
 
     assert_equal(expected, actual)

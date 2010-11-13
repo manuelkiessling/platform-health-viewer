@@ -11,7 +11,7 @@ class EventType < ActiveRecord::Base
             event_type = self.find(:first, :conditions => { :source => source, :name => name })
             if (!event_type.nil?) then
               event_type.events.each do |event|
-                results = results | [ "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
+                results = results | [ "created_at" => event.created_at.to_s, "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
               end
             end
           end
@@ -20,7 +20,7 @@ class EventType < ActiveRecord::Base
           event_types.each do |event_type|
             if (!event_type.nil?) then
               event_type.events.each do |event|
-                results = results | [ "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
+                results = results | [ "created_at" => event.created_at.to_s, "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
               end
             end
           end
@@ -32,7 +32,7 @@ class EventType < ActiveRecord::Base
         event_types.each do |event_type|
           if (!event_type.nil?) then
             event_type.events.each do |event|
-              results = results | [ "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
+              results = results | [ "created_at" => event.created_at.to_s, "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
             end
           end
         end
