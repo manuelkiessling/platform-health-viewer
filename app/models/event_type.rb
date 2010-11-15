@@ -4,40 +4,18 @@ class EventType < ActiveRecord::Base
 
   def self.find_by_sources_and_names(sources, names)
     results = []
-    if (!sources.empty?)
-      sources.each do |source|
-        if (!names.empty?)
-          names.each do |name|
-            event_type = self.find(:first, :conditions => { :source => source, :name => name })
-            if (!event_type.nil?) then
-              event_type.events.each do |event|
-                results = results | [ "created_at" => event.created_at.to_s, "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
-              end
-            end
-          end
+      if (sources.empty?) then
+        event_types = self.all(:conditions => { :name => names })
+      else
+        if (names.empty?) then
+          event_types = self.all(:conditions => { :source => sources })
         else
-          event_types = self.find(:all, :conditions => { :source => source })
-          event_types.each do |event_type|
-            if (!event_type.nil?) then
-              event_type.events.each do |event|
-                results = results | [ "created_at" => event.created_at.to_s, "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
-              end
-            end
-          end
+          event_types = self.all(:conditions => { :source => sources, :name => names })
         end
       end
-    else
-      names.each do |name|
-        event_types = self.find(:all, :conditions => { :name => name })
-        event_types.each do |event_type|
-          if (!event_type.nil?) then
-            event_type.events.each do |event|
-              results = results | [ "created_at" => event.created_at.to_s, "source" => event_type.source, "name" => event_type.name, "value" => event.value ]
-            end
-          end
-        end
+      Event.all(:conditions => { :event_type_id => event_types }, :order => "id DESC").each do |event|
+        results = results | [ "created_at" => event.created_at.to_s, "source" => self.find(event.event_type_id).source, "name" => self.find(event.event_type_id).name, "value" => event.value ]
       end
-    end
     results
   end
 

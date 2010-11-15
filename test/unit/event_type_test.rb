@@ -99,7 +99,7 @@ class EventTypeTest < ActiveSupport::TestCase
 
     expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ]
+               ].reverse
 
     assert_equal(expected, actual)
   end
@@ -121,7 +121,7 @@ class EventTypeTest < ActiveSupport::TestCase
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ]
+               ].reverse
 
     assert_equal(expected, actual)
   end
@@ -133,7 +133,7 @@ class EventTypeTest < ActiveSupport::TestCase
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"}
-               ]
+               ].reverse
 
     assert_equal(expected, actual)
   end
@@ -147,7 +147,7 @@ class EventTypeTest < ActiveSupport::TestCase
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ]
+               ].reverse
 
     assert_equal(expected, actual)
   end
@@ -161,7 +161,7 @@ class EventTypeTest < ActiveSupport::TestCase
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
                 {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ]
+               ].reverse
 
     assert_equal(expected, actual)
   end
