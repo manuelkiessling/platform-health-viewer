@@ -10,51 +10,16 @@ class EventTypeTest < ActiveSupport::TestCase
     et.name = "cpu_load"
     et.save
 
-    e = Event.new
-    e.event_type = et
-    e.value = "0.11"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "0.12"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
     et = EventType.new
     et.source = "TESTcron02"
     et.name = "cpu_load"
     et.save
 
-    e = Event.new
-    e.event_type = et
-    e.value = "0.21"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "0.22"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
     et = EventType.new
     et.source = "TESTcron02"
     et.name = "free_mem"
     et.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "21%"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "22%"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
+        
   end
 
   teardown do
@@ -95,11 +60,18 @@ class EventTypeTest < ActiveSupport::TestCase
   end
 
   test "test find with 2 sources and 1 name" do
-    actual = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], ["free_mem"])
+    ets = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], ["free_mem"])
 
-    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ].reverse
+    actual = []
+    ets.each do |et|
+      actual << et.source
+      actual << et.name
+    end
+
+    expected = [
+                "TESTcron02",
+                "free_mem"
+               ]
 
     assert_equal(expected, actual)
   end
@@ -113,55 +85,83 @@ class EventTypeTest < ActiveSupport::TestCase
   end
 
   test "find with 2 sources and no name" do
-    actual = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], [])
+    ets = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], [])
 
-    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ].reverse
+    actual = []
+    ets.each do |et|
+      actual << et.source
+      actual << et.name
+    end
+
+    expected = [
+                "TESTcron01",
+                "cpu_load",
+                "TESTcron02",
+                "cpu_load",
+                "TESTcron02",
+                "free_mem"
+               ]
 
     assert_equal(expected, actual)
   end
 
   test "find with no sources and 1 name" do
-    actual = EventType.find_by_sources_and_names([], ["cpu_load"])
+    ets = EventType.find_by_sources_and_names([], ["cpu_load"])
 
-    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"}
-               ].reverse
+    actual = []
+    ets.each do |et|
+      actual << et.source
+      actual << et.name
+    end
+
+    expected = [
+                "TESTcron01",
+                "cpu_load",
+                "TESTcron02",
+                "cpu_load"
+               ]
 
     assert_equal(expected, actual)
   end
 
   test "find with no sources and 2 names" do
-    actual = EventType.find_by_sources_and_names([], ["cpu_load", "free_mem"])
+    ets = EventType.find_by_sources_and_names([], ["cpu_load", "free_mem"])
 
-    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ].reverse
+    actual = []
+    ets.each do |et|
+      actual << et.source
+      actual << et.name
+    end
+
+    expected = [
+                "TESTcron01",
+                "cpu_load",
+                "TESTcron02",
+                "cpu_load",
+                "TESTcron02",
+                "free_mem"
+               ]
 
     assert_equal(expected, actual)
   end
 
   test "find with 2 sources and 2 names" do
-    actual = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], ["cpu_load", "free_mem"])
+    ets = EventType.find_by_sources_and_names(["TESTcron01", "TESTcron02"], ["cpu_load", "free_mem"])
 
-    expected = [{"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.11"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron01", "name" => "cpu_load", "value" => "0.12"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.21"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "cpu_load", "value" => "0.22"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "21%"},
-                {"created_at" => "2010-11-01 15:43:26 UTC", "source" => "TESTcron02", "name" => "free_mem", "value" => "22%"}
-               ].reverse
+    actual = []
+    ets.each do |et|
+      actual << et.source
+      actual << et.name
+    end
+
+    expected = [
+                "TESTcron01",
+                "cpu_load",
+                "TESTcron02",
+                "cpu_load",
+                "TESTcron02",
+                "free_mem"
+               ]
 
     assert_equal(expected, actual)
   end
