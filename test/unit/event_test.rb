@@ -75,7 +75,6 @@ class EventTest < ActiveSupport::TestCase
     assert !e.save, "Could save with non-existant event_type_id"
   end
 
-
   test "works with existing event_type_id" do
     et = EventType.new
     et.name = "test"
