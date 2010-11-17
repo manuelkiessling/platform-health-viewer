@@ -47,7 +47,9 @@ class TagsController < ApplicationController
                                               Tag.sources_for_tagname(tagname),
                                               Tag.names_for_tagname(tagname)
                                             )
-                        }
+                        },
+                        :order => "id DESC",
+                        :limit => 10
                       )
     respond_to do |format|
       format.html { redirect_to tags_path }
