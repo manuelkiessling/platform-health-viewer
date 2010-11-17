@@ -42,7 +42,13 @@ class TagsController < ApplicationController
   def events
     tagname = params[:tagname]
     @tagid = params[:tagid]
-    @events = EventType.find_by_sources_and_names(Tag.sources_for_tagname(tagname), Tag.names_for_tagname(tagname))
+    @events = Event.all(:conditions => {
+                          :event_type_id => EventType.find_by_sources_and_names(
+                                              Tag.sources_for_tagname(tagname),
+                                              Tag.names_for_tagname(tagname)
+                                            )
+                        }
+                      )
     respond_to do |format|
       format.html { redirect_to tags_path }
       format.js

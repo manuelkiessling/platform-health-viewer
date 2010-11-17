@@ -4,57 +4,6 @@ class EventTest < ActiveSupport::TestCase
 
   setup do
     teardown
-
-    et = EventType.new
-    et.source = "TESTcron01"
-    et.name = "cpu_load"
-    et.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "0.11"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "0.12"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    et = EventType.new
-    et.source = "TESTcron02"
-    et.name = "cpu_load"
-    et.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "0.21"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "0.22"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    et = EventType.new
-    et.source = "TESTcron02"
-    et.name = "free_mem"
-    et.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "21%"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
-
-    e = Event.new
-    e.event_type = et
-    e.value = "22%"
-    e.created_at = "2010-11-01 15:43:26.642887"
-    e.save
   end
 
   teardown do
@@ -85,6 +34,41 @@ class EventTest < ActiveSupport::TestCase
     e.event_type = et
     e.value = "4783"
     assert e.save, "Could not save with existant event_type_id"
+  end
+
+  test "get full events for certain event types" do
+    et1 = EventType.new
+    et1.source = "TESTcron01"
+    et1.name = "cpu_load"
+    et1.save
+
+    e1 = Event.new
+    e1.event_type = et1
+    e1.value = "0.11"
+    e1.created_at = "2010-11-01 15:43:26.642887"
+    e1.save
+
+    e2 = Event.new
+    e2.event_type = et1
+    e2.value = "0.12"
+    e2.created_at = "2010-11-01 15:43:26.642887"
+    e2.save
+
+    et2 = EventType.new
+    et2.source = "TESTcron02"
+    et2.name = "cpu_load"
+    et2.save
+
+    e3 = Event.new
+    e3.event_type = et2
+    e3.value = "0.21"
+    e3.created_at = "2010-11-01 15:43:26.642887"
+    e3.save
+
+    events = Event.find_all_by_event_type_id([et1.id, et2.id])
+
+    assert_equal([e1, e2, e3], events)
+
   end
 
 end
