@@ -9,6 +9,7 @@ HealthView::Application.routes.draw do
   get "queue/search"
   get "tags/index"
   get "tags/events"
+  get "screen/show"
 
   resource :tags
     root :to => "tags#index"

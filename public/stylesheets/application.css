@@ -142,3 +142,9 @@ body {
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffd1), to(#ffff81));
     background: -moz-linear-gradient(#ffffd1, #ffff81);
 }
+
+.frame {
+  display: inline-block;
+  position: absolute;
+  background-color: #eee;
+}

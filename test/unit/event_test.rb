@@ -68,6 +68,90 @@ class EventTest < ActiveSupport::TestCase
     events = Event.find_all_by_event_type_id([et1.id, et2.id])
 
     assert_equal([e1, e2, e3], events)
+  end
+
+  test "get grouped and normalized event list" do
+    et1 = EventType.new
+    et1.source = "TESTcron01"
+    et1.name = "cpu_load"
+    et1.save
+
+    e0 = Event.new
+    e0.event_type = et1
+    e0.value = "0.001"
+    e0.created_at = "2010-11-01 15:43:06"
+    e0.save
+
+    e1 = Event.new
+    e1.event_type = et1
+    e1.value = "0.1"
+    e1.created_at = "2010-11-01 15:43:10"
+    e1.save
+
+    e2 = Event.new
+    e2.event_type = et1
+    e2.value = "0.2"
+    e2.created_at = "2010-11-01 15:43:13"
+    e2.save
+
+    et2 = EventType.new
+    et2.source = "TESTcron02"
+    et2.name = "cpu_load"
+    et2.save
+
+    e3 = Event.new
+    e3.event_type = et2
+    e3.value = "0.3"
+    e3.created_at = "2010-11-01 15:43:11"
+    e3.save
+
+    e4 = Event.new
+    e4.event_type = et2
+    e4.value = "0.4"
+    e4.created_at = "2010-11-01 15:43:13"
+    e4.save
+
+    e5 = Event.new
+    e5.event_type = et2
+    e5.value = "0.7"
+    e5.created_at = "2010-11-01 15:43:13"
+    e5.save
+
+    e6 = Event.new
+    e6.event_type = et2
+    e6.value = "0.5"
+    e6.created_at = "2010-11-01 15:43:15"
+    e6.save
+
+    expected = []
+    expected << {"event_type_id" => et1.id,
+                 "values" =>
+                   { 4 => "0.1",
+                     7 => "0.2"
+                   }
+                }
+    expected << {"event_type_id" => et2.id,
+                 "values" =>
+                   { 5 => "0.3",
+                     7 => "0.7",
+                     9 => "0.5"
+                   }
+                }
+
+    normalized_events = Event.get_normalized_for_timerange([et1, et2], 60, Time.zone.parse("2010-11-01 15:44:06"))
+
+    actual = []
+    normalized_events.each_pair do |event_type, events|
+      values = {}
+      events.each_pair do |index, event|
+        values[index] = event.value
+      end
+      actual << {"event_type_id" => event_type.id,
+                 "values" => values
+                }
+    end
+
+    assert_equal(expected, actual)
 
   end
 
