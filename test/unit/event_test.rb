@@ -160,7 +160,7 @@ class EventTest < ActiveSupport::TestCase
     et1.save
 
     i = 1
-    10.times do
+    12.times do
       Event.new do |e|
         e.value = i
         e.event_type = et1
@@ -176,7 +176,7 @@ class EventTest < ActiveSupport::TestCase
     et2.save
 
     i = 1
-    10.times do
+    12.times do
       Event.new do |e|
         e.value = i * 2
         e.event_type = et2
