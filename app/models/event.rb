@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
                           "event_type_id IN (?) AND created_at <= ? AND created_at > ?",
                           event_types, start_at, start_at - range_in_seconds
                         ],
-                        :order => "id ASC"
+                        :order => "created_at ASC"
                       )
 
     event_groups = {}
