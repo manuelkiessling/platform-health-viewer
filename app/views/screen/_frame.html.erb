@@ -1,6 +1,6 @@
 <% frames.each do |frame| %>
   <style>
-    #frame_<%= frame.id %> {
+    #frame_<%= frame.id %>, #frame_<%= frame.id %>_graph {
       top: <%= frame.top %>px;
       left: <%= frame.left %>px;
       width: <%= frame.width %>px;
@@ -9,41 +9,44 @@
   </style>
 
   <div id="frame_<%= frame.id %>" class="frame">
-    <!-- <%= frame.tag %> -->
-    <%
-
-      ets = EventType.find_by_sources_and_names(
-                                               Tag.sources_for_tagname(frame.tag),
-                                               Tag.names_for_tagname(frame.tag)
-                                              )
-      event_groups = Event.get_normalized_values_for_timerange(ets, 1000, Time.zone.parse("2010-11-19 11:55:00"), 5)
-
-      x = []
-      data = []
-      x << 200.times.collect
-      zerodata = []
-      200.times { zerodata << 0 }
-      data << zerodata
-      event_groups.each_pair do |event_type_id, values|
-        gx = []
-        gdata = []
-        values.keys.sort.each do |key|
-          gx << key
-          gdata << values[key]
-        end
-        x << gx
-        data << gdata
-      end
-
-    %>
-
-    <script type="text/javascript">
-      var r = Raphael("frame_<%= frame.id %>");
-      x = <%= x.inspect.to_s %>
-      data = <%= data.inspect.to_s %>
-      r.g.linechart(20, 0, <%= frame.width %> -20, <%= frame.height %> - 20, x, data, {nostroke: false, axis: "0 0 1 1", symbol: "", smooth: false, shade: true});
-      //r.g.linechart(20, 0, 200, 180, [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 5], [4, 5, 6, 7, 8]], [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [12, 15, 16], [13, 15, 17, 11, 19]], {nostroke: false, axis: "0 0 1 1", symbol: "", smooth: false, shade: true});
-    </script>
+    <div id="frame_<%= frame.id %>_graph">
+      
+    </div>
   </div>
+
+  <%
+
+    ets = EventType.find_by_sources_and_names(
+                                             Tag.sources_for_tagname(frame.tag),
+                                             Tag.names_for_tagname(frame.tag)
+                                            )
+    event_groups = Event.get_normalized_values_for_timerange(ets, 100, Time.zone.parse("2010-11-19 11:55:00"))
+
+    x = []
+    data = []
+    x << 100.times.collect
+    zerodata = []
+    100.times { zerodata << 0 }
+    data << zerodata
+    event_groups.each_pair do |event_type_id, values|
+      gx = []
+      gdata = []
+      values.keys.sort.each do |key|
+        gx << key
+        gdata << values[key]
+      end
+      x << gx
+      data << gdata
+    end
+
+  %>
+
+  <script type="text/javascript">
+    var r = Raphael("frame_<%= frame.id %>_graph");
+    x = <%= x.inspect.to_s %>
+    data = <%= data.inspect.to_s %>
+    r.g.linechart(0, 0, <%= frame.width %>, <%= frame.height %>, x, data, {nostroke: false, axis: "0 0 1 1", symbol: "", smooth: false, shade: true});
+    //r.g.linechart(20, 0, 200, 180, [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 5], [4, 5, 6, 7, 8]], [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [12, 15, 16], [13, 15, 17, 11, 19]], {nostroke: false, axis: "0 0 1 1", symbol: "", smooth: false, shade: true});
+  </script>
   
 <% end %>
