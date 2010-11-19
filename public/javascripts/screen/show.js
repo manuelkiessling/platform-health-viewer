@@ -1,1 +1,1 @@
-$(".frame").draggable({ revert: "invalid" });
+$(".frame").draggable();

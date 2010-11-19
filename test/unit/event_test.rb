@@ -70,7 +70,7 @@ class EventTest < ActiveSupport::TestCase
     assert_equal([e1, e2, e3], events)
   end
 
-  test "get grouped and normalized event list" do
+  test "get grouped and normalized event list, no average" do
     et1 = EventType.new
     et1.source = "TESTcron01"
     et1.name = "cpu_load"
@@ -138,14 +138,72 @@ class EventTest < ActiveSupport::TestCase
                    }
                 }
 
-    normalized_events = Event.get_normalized_for_timerange([et1, et2], 60, Time.zone.parse("2010-11-01 15:44:06"))
+    normalized_events = Event.get_normalized_values_for_timerange([et1, et2], 60, Time.zone.parse("2010-11-01 15:44:06"))
 
     actual = []
-    normalized_events.each_pair do |event_type_id, events|
-      values = {}
-      events.each_pair do |index, event|
-        values[index] = event.value
+    normalized_events.each_pair do |event_type_id, values|
+      actual << {"event_type_id" => event_type_id,
+                 "values" => values
+                }
+    end
+
+    assert_equal(expected, actual)
+
+  end
+
+  test "get grouped and normalized event list with average" do
+    t = Time.zone.parse("2010-11-19 11:55:00")
+
+    et1 = EventType.new
+    et1.source = "TESTcron01"
+    et1.name = "cpu_load"
+    et1.save
+
+    i = 1
+    10.times do
+      Event.new do |e|
+        e.value = i
+        e.event_type = et1
+        e.created_at = t + i
+        e.save
       end
+      i = i + 1
+    end
+
+    et2 = EventType.new
+    et2.source = "TESTcron02"
+    et2.name = "cpu_load"
+    et2.save
+
+    i = 1
+    10.times do
+      Event.new do |e|
+        e.value = i * 2
+        e.event_type = et2
+        e.created_at = t + i
+        e.save
+      end
+      i = i + 1
+    end
+
+    expected = []
+    expected << {"event_type_id" => et1.id,
+                 "values" =>
+                   { 0 => "3.0",
+                     1 => "8.0"
+                   }
+                }
+    expected << {"event_type_id" => et2.id,
+                 "values" =>
+                   { 0 => "6.0",
+                     1 => "16.0",
+                   }
+                }
+
+    normalized_events = Event.get_normalized_values_for_timerange([et1, et2], 10, Time.zone.parse("2010-11-19 11:55:10"), 5)
+
+    actual = []
+    normalized_events.each_pair do |event_type_id, values|
       actual << {"event_type_id" => event_type_id,
                  "values" => values
                 }
