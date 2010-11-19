@@ -141,12 +141,12 @@ class EventTest < ActiveSupport::TestCase
     normalized_events = Event.get_normalized_for_timerange([et1, et2], 60, Time.zone.parse("2010-11-01 15:44:06"))
 
     actual = []
-    normalized_events.each_pair do |event_type, events|
+    normalized_events.each_pair do |event_type_id, events|
       values = {}
       events.each_pair do |index, event|
         values[index] = event.value
       end
-      actual << {"event_type_id" => event_type.id,
+      actual << {"event_type_id" => event_type_id,
                  "values" => values
                 }
     end

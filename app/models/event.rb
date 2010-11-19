@@ -12,11 +12,11 @@ class Event < ActiveRecord::Base
 
     event_groups = {}
     events.each do |event|
-      event_type = event.event_type
-      if (event_groups[event_type].nil?) then
-        event_groups[event_type] = {}
+      event_type_id = event.event_type_id
+      if (event_groups[event_type_id].nil?) then
+        event_groups[event_type_id] = {}
       end
-      event_groups[event_type][(event.created_at - (start_at - range_in_seconds)).to_int] = event
+      event_groups[event_type_id][(event.created_at - (start_at - range_in_seconds)).to_int] = event
     end
 
     event_groups
