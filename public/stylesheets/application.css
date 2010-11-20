@@ -146,5 +146,22 @@ body {
 .frame {
   display: inline-block;
   position: absolute;
-  background-color: #eee;
+  background-color: #fff;
+  border: 1px solid lightgray;
+  padding: 0px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 3px #ddd;
+}
+
+.frame .frameheader {
+  padding: 8px;
+  padding-left: 48px;
+  color: gray;
+  font-family: "Courier New", Courier, sans-serif;
+  font-size: 12px;
+}
+
+svg text {
+  fill: gray;
 }
