@@ -5,6 +5,7 @@
       left: <%= frame.left %>px;
       width: <%= frame.width %>px;
       height: <%= frame.height %>px;
+      z-index: 10<%= frame.id %>;
     }
   </style>
 
@@ -55,11 +56,15 @@
   %>
 
   <script type="text/javascript">
-    var r = Raphael("frame_<%= frame.id %>_graph");
-    x = <%= x.inspect.to_s %>
-    data = <%= data.inspect.to_s %>
-    r.g.linechart(30, 0, <%= frame.width %> - 60, <%= frame.height %> - 27, x, data, {nostroke: false, axis: "0 1 0 1", symbol: "", smooth: false, shade: true});
-    //r.g.linechart(20, 0, 200, 180, [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 5], [4, 5, 6, 7, 8]], [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [12, 15, 16], [13, 15, 17, 11, 19]], {nostroke: false, axis: "0 0 1 1", symbol: "", smooth: false, shade: true});
+    function drawChartForFrame<%= frame.id %>(redraw) {
+      if (redraw) r<%= frame.id %>.clear();
+      r<%= frame.id %> = Raphael("frame_<%= frame.id %>_graph");
+      x = <%= x.inspect.to_s %>
+      data = <%= data.inspect.to_s %>
+      r<%= frame.id %>.g.linechart(30, 0, <%= frame.width %> - 60, <%= frame.height %> - 27, x, data, {nostroke: false, axis: "0 1 0 1", symbol: "", smooth: false, shade: true});
+      //r.g.linechart(20, 0, 200, 180, [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 5], [4, 5, 6, 7, 8]], [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [12, 15, 16], [13, 15, 17, 11, 19]], {nostroke: false, axis: "0 0 1 1", symbol: "", smooth: false, shade: true});
+    }
+    drawChartForFrame<%= frame.id %>(false);
   </script>
   
 <% end %>

@@ -10,6 +10,8 @@ HealthView::Application.routes.draw do
   get "tags/index"
   get "tags/events"
   get "screen/show"
+  get "screen/update_frame"
+  post "screen/update_frame"
 
   resource :tags
     root :to => "tags#index"
