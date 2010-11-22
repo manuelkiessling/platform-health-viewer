@@ -126,15 +126,15 @@ class EventTest < ActiveSupport::TestCase
     expected = []
     expected << {"event_type_id" => et1.id,
                  "values" =>
-                   { 4 => "0.1",
-                     7 => "0.2"
+                   { 4 => 0.1,
+                     7 => 0.2
                    }
                 }
     expected << {"event_type_id" => et2.id,
                  "values" =>
-                   { 5 => "0.3",
-                     7 => "0.7",
-                     9 => "0.5"
+                   { 5 => 0.3,
+                     7 => 0.7,
+                     9 => 0.5
                    }
                 }
 
@@ -189,14 +189,14 @@ class EventTest < ActiveSupport::TestCase
     expected = []
     expected << {"event_type_id" => et1.id,
                  "values" =>
-                   { 0 => "3.0",
-                     1 => "8.0"
+                   { 0 => 3.0,
+                     1 => 8.0
                    }
                 }
     expected << {"event_type_id" => et2.id,
                  "values" =>
-                   { 0 => "6.0",
-                     1 => "16.0",
+                   { 0 => 6.0,
+                     1 => 16.0,
                    }
                 }
 
