@@ -34,13 +34,13 @@
                                              Tag.sources_for_tagname(frame.tag),
                                              Tag.names_for_tagname(frame.tag)
                                             )
-    event_groups = Event.get_normalized_values_for_timerange(ets, 600)
+    event_groups = Event.get_normalized_values_for_timerange(ets, 600, nil, nil)
 
     x = []
     data = []
-    x << 400.times.collect
+    x << 600.times.collect
     zerodata = []
-    400.times { zerodata << 0 }
+    600.times { zerodata << 0 }
     data << zerodata
     event_groups.each_pair do |event_type_id, values|
       gx = []
