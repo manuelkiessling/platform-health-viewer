@@ -21,7 +21,7 @@ db.open("../db/development.sqlite3", function (error) {
         console.log("Value: " + q.query.value);
 
         db.execute
-        ( "INSERT INTO queue_events (source, name, value, created_at) VALUES (?, ?, ?, strftime('%s','now'))",
+        ( "INSERT INTO queue_events (source, name, value, created_at) VALUES (?, ?, ?, datetime())",
           [q.query.source, q.query.name, q.query.value],
           function (error, rows) {
             if (error) throw error;
