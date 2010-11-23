@@ -51,26 +51,7 @@
       <pre id="events_tagid_<%= tag.id %>" class="events"></pre>
 
       <script type="text/javascript">
-        $('#link_events_tagid_<%= tag.id %>').bind('ajax:success', function(event, data, status, xhr) {
-          $("#events_tagid_<%= tag.id %>").hide();
-          $("#events_tagid_<%= tag.id %>").html('');
-
-          var json = $.parseJSON(xhr.responseText);
-          for (key in json) {
-            $('#events_tagid_<%= tag.id %>').append(json[key].id);
-            $('#events_tagid_<%= tag.id %>').append('	');
-            $('#events_tagid_<%= tag.id %>').append(json[key].created_at);
-            $('#events_tagid_<%= tag.id %>').append('	');
-            $('#events_tagid_<%= tag.id %>').append(json[key].name);
-            $('#events_tagid_<%= tag.id %>').append('	');
-            $('#events_tagid_<%= tag.id %>').append(json[key].source);
-            $('#events_tagid_<%= tag.id %>').append('	');
-            $('#events_tagid_<%= tag.id %>').append(json[key].value);
-            $('#events_tagid_<%= tag.id %>').append('<br />');
-          }
-          
-          $("#events_tagid_<%= tag.id %>").slideDown(400);
-        });
+        bindEventRenderer("<%= tag.id %>");
       </script>
 
     </div>
