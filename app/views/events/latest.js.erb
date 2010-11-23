@@ -1,8 +1,0 @@
-<% if @events then %>
-  $("#events_tagid_<%= @tag_id %>").hide()
-  $("#events_tagid_<%= @tag_id %>").html('')
-  <% @events.each  do |event| %>
-    $("#events_tagid_<%= @tag_id %>").append('<%= escape_javascript(render :partial => "event", :locals => { :event => event } ) %>');
-  <% end %>
-  $("#events_tagid_<%= @tag_id %>").slideDown(400);
-<% end %>
