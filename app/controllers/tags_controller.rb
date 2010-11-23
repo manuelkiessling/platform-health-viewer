@@ -32,28 +32,12 @@ class TagsController < ApplicationController
     end
   end
 
-  def show
+  def index
     @tags = Tag.all
     respond_to do |format|
       format.html
-    end
-  end
-
-  def events
-    tagname = params[:tagname]
-    @tagid = params[:tagid]
-    @events = Event.all(:conditions => {
-                          :event_type_id => EventType.find_by_sources_and_names(
-                                              Tag.sources_for_tagname(tagname),
-                                              Tag.names_for_tagname(tagname)
-                                            )
-                        },
-                        :order => "id DESC",
-                        :limit => 10
-                      )
-    respond_to do |format|
-      format.html { redirect_to tags_path }
-      format.js
+      format.xml { render :xml => @tags.to_xml }
+      format.json { render :json => @tags.to_json }
     end
   end
 

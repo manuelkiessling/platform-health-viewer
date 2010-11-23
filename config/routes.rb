@@ -1,4 +1,7 @@
 HealthView::Application.routes.draw do
+
+  root :to => "tags#index"
+
   get "playground/get_result"
   get "playground/find_event"
   get "playground/create_queue_events"
@@ -19,8 +22,13 @@ HealthView::Application.routes.draw do
 
   resources :frames
 
-  resource :tags
-    root :to => "tags#index"
+  resources :tags do
+    resources :events do
+      collection do
+        get 'latest'
+      end
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

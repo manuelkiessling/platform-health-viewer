@@ -35,7 +35,7 @@
 
     <div class="eventsarea">
       <%= link_to('Show latest events',
-                    { :controller => "tags", :action => "events", :format => "js", :tagname => tag.name, :tagid => tag.id },
+                    { :controller => "events", :action => "latest", :format => "js", :tag_id => tag.id },
                     :method => "get",
                     :remote => true,
                     :complete => 'See below:',
