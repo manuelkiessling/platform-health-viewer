@@ -1,0 +1,30 @@
+<h1>Screen</h1>
+
+<div id="frames">
+  <%=
+    render :partial => "frame", :locals => { :frames => @frames }
+  %>
+</div>
+
+<div id="formarea">
+
+  <div id="form">
+    <%= form_for [@screen, Frame.new], :remote => true do |f| %>
+      <strong>
+        <%= f.label :tag, "Frame for tag: " %><br />
+      </strong>
+      <%= f.text_field :tag %><br />
+      <br />
+      <%= f.label :width, "width: " %><br />
+      <%= f.text_field :width, :value => "300" %><br />
+      <%= f.label :height, "height: " %><br />
+      <%= f.text_field :height, :value => "200" %><br />
+      <%= f.submit "Add frame" %>
+    <% end %>
+  </div>
+
+  <div id="notice"><%=h flash[:notice] %></div>
+
+</div>
+
+<script type="text/javascript" src="/javascripts/screen/show.js"></script>

@@ -13,6 +13,12 @@ HealthView::Application.routes.draw do
   get "screen/update_frame"
   post "screen/update_frame"
 
+  resources :screens do
+    resources :frames
+  end
+
+  resources :frames
+
   resource :tags
     root :to => "tags#index"
 

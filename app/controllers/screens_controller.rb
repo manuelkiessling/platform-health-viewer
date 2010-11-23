@@ -1,8 +1,10 @@
-class ScreenController < ApplicationController
+class ScreensController < ApplicationController
 
   def show
-    screen = Screen.find_by_name(params[:name])
+    screen = Screen.find(params[:id])
     @frames = screen.frames
+    @new_frame = Frame.new
+    @new_frame.screen = screen
   end
 
   def add_frame
