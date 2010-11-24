@@ -2,25 +2,9 @@ HealthView::Application.routes.draw do
 
   root :to => "tags#index"
 
-  get "playground/get_result"
-  get "playground/find_event"
-  get "playground/create_queue_events"
-  get "playground/create_other_events"
-  get "playground/create_tag"
-  get "queue/events"
-  post "queue/events"
-  get "queue/search"
-  get "tags/index"
-  get "tags/events"
-  get "screen/show"
-  get "screen/update_frame"
-  post "screen/update_frame"
-
   resources :screens do
     resources :frames
   end
-
-  resources :frames
 
   resources :tags do
     resources :events do

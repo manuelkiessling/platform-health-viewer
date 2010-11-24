@@ -7348,9 +7348,9 @@ $.extend(Datepicker.prototype, {
 	   @param  date      string or Date - the initial date to display
 	   @param  onSelect  function - the function to call when a date is selected
 	   @param  settings  object - update the dialog date picker instance's settings (anonymous object)
-	   @param  pos       int[2] - coordinates for the dialog's position within the screen or
+	   @param  pos       int[2] - coordinates for the dialog's position within the frames or
 	                     event - with x/y coordinates or
-	                     leave empty for default (screen centre)
+	                     leave empty for default (frames centre)
 	   @return the manager object */
 	_dialogDatepicker: function(input, date, onSelect, settings, pos) {
 		var inst = this._dialogInst; // internal instance
@@ -7379,7 +7379,7 @@ $.extend(Datepicker.prototype, {
 				[(browserWidth / 2) - 100 + scrollX, (browserHeight / 2) - 150 + scrollY];
 		}
 
-		// move input on screen for focus, but hidden behind dialog
+		// move input on frames for focus, but hidden behind dialog
 		this._dialogInput.css('left', (this._pos[0] + 20) + 'px').css('top', this._pos[1] + 'px');
 		inst.settings.onSelect = onSelect;
 		this._inDialog = true;
@@ -7779,7 +7779,7 @@ $.extend(Datepicker.prototype, {
 			parseFloat(convert(elem.css('border-top-width')))];
 	},
 
-	/* Check positioning to remain on screen. */
+	/* Check positioning to remain on frames. */
 	_checkOffset: function(inst, offset, isFixed) {
 		var dpWidth = inst.dpDiv.outerWidth();
 		var dpHeight = inst.dpDiv.outerHeight();
@@ -7801,7 +7801,7 @@ $.extend(Datepicker.prototype, {
 		return offset;
 	},
 
-	/* Find an object's position on the screen. */
+	/* Find an object's position on the frames. */
 	_findPos: function(obj) {
 		var inst = this._getInst(obj);
 		var isRTL = this._get(inst, 'isRTL');

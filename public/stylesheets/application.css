@@ -1,7 +1,72 @@
 body {
   font-family: Arial, sans-serif;
   padding-left: 40px;
-  padding-top: 0px;
+  padding-top: 0;
+}
+
+#navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  background-color: #2f4f4f;
+  padding: 8px;
+  z-index: 1000;
+}
+
+#menu {
+  position: fixed;
+  top: 53px;
+  left: 56px;
+}
+
+.menuitem {
+  background-color: #708090;
+  color: white;
+  padding: 6px;
+  padding-left: 9px;
+  padding-right: 9px;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  margin: 0;
+}
+
+.menuitem a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.menuitem.active {
+  background-color: white;
+  color: black;
+}
+
+#apptitle {
+  color: white;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 16pt;
+  font-weight: bold;
+  margin-top: 7px;
+  margin-left: 48px;
+}
+
+#addbutton {
+  border: 1px dotted white;
+  padding: 4px;
+  width: 24px;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  right: 24px;
+  top: 12px;
+  position: fixed;
+}
+
+#content {
+  margin-top: 60px;
 }
 
 .events {
@@ -16,7 +81,7 @@ body {
 
 #tags {
   width: 50%;
-  margin-top: 40px;
+  margin-top: 80px;
   display: inline-block;
 }
 
@@ -24,22 +89,25 @@ body {
   display: inline-block;
   position: fixed;
   left: 52%;
-  top: 118px;
+  top: 139px;
   width: 255px;
-  padding-top: 0px;
+  padding-top: 0;
+  z-index: 1001;
 }
 
 #form {
   background-color: #f5f5dc;
-  border-radius: 8px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
   background: #e7e7be;
   background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f7f7de), to(#e7e7be));
   background: -moz-linear-gradient(#f7f7de, #e7e7be);
   padding: 16px;
   padding-top: 32px;
-  -webkit-box-shadow: #d6d6d6 0px 0px 6px;
-  -moz-box-shadow: #d6d6d6 0px 0px 6px;
-  box-shadow: #d6d6d6 0px 0px 6px;
+  -webkit-box-shadow: #aaa 1px 1px 4px;
+  -moz-box-shadow: #aaa 1px 1px 4px;
+  box-shadow: #aaa 1px 1px 4px;
 }
 
 #form.droppable-state-active {
@@ -78,13 +146,15 @@ body {
 	margin-bottom: 10px;
 	min-width: 100px;
 	display: block;
-    border-radius: 8px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     background: #f2f2f2;
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f9f9f9), to(#ececec));
     background: -moz-linear-gradient(#f9f9f9, #ececec);
-    -webkit-box-shadow: #d6d6d6 0px 0px 6px;
-    -moz-box-shadow: #d6d6d6 0px 0px 6px;
-    box-shadow: #d6d6d6 0px 0px 6px;
+    -webkit-box-shadow: #aaa 1px 1px 4px;
+    -moz-box-shadow: #aaa 1px 1px 4px;
+    box-shadow: #aaa 1px 1px 4px;
 
 }
 
@@ -100,10 +170,10 @@ body {
 
 .tag h2 {
 	color: #006699;
-	margin-left: 0px;
+	margin-left: 0;
 	margin-bottom: 5px;
-	margin-right: 0px;
-	margin-top: 0px;
+	margin-right: 0;
+	margin-top: 0;
 	display: block;
 	font-size: 12pt;
 	padding: 4px;
@@ -143,14 +213,17 @@ body {
     background: -moz-linear-gradient(#ffffd1, #ffff81);
 }
 
+/* screens/:screen_id/frames */
+
 .frame {
   display: inline-block;
   position: absolute;
   background-color: #fff;
   border: 1px solid lightgray;
-  padding: 0px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
+  padding: 0;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
   -webkit-box-shadow: 2px 2px 3px #ddd;
 }
 

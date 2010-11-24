@@ -1,3 +1,5 @@
+$("#menuitem_tags").addClass("active");
+
 $("#form").droppable({
   activeClass: "droppable-state-active",
   hoverClass: "droppable-state-hover",

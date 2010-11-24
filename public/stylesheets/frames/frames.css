@@ -1,0 +1,9 @@
+#formarea {
+  display: inline-block;
+  position: fixed;
+  left: auto;
+  right: 24px;
+  top: 58px;
+  width: 255px;
+  padding-top: 0px;
+}

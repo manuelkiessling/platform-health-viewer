@@ -12,7 +12,7 @@
   <div id="frame_<%= frame.id %>" class="frame">
     <div class="frameheader">
       <%= frame.tag %>
-      -
+      &nbsp;
       <strong>Sources:</strong>
       <% Tag.sources_for_tagname(frame.tag).each do |s| %>
         <%= s %>
@@ -22,10 +22,10 @@
         <%= n %>
       <% end %>
     </div>
+
     <span></span>
-    <div id="frame_<%= frame.id %>_graph">
-      
-    </div>
+    
+    <div id="frame_<%= frame.id %>_graph"></div>
   </div>
 
   <%

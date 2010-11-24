@@ -20,38 +20,38 @@ class Tag < CouchRest::Model::Base
     super
   end
 
-  def resolved_event_names
-    Tag.names_for_tagname(name)
+  def resolved_event_sources
+    if (!self.tags.empty?) then
+      event_sources = []
+      self.tags.each do |subtag|
+        event_sources = event_sources | Tag.sources_for_tagname(subtag)
+      end
+      return event_sources
+    end
+    self.event_sources
   end
 
-  def resolved_event_sources
-    Tag.sources_for_tagname(name)
+  def resolved_event_names
+    if (!self.tags.empty?) then
+      event_names = []
+      self.tags.each do |subtag|
+        event_names = event_names | Tag.names_for_tagname(subtag)
+      end
+      return event_names
+    end
+    self.event_names
   end
 
   def self.sources_for_tagname(tagname)
     tags = Tag.by_name(:key => tagname)
     tag = Tag.find(tags[0]["_id"])
-    if (!tag.tags.empty?) then
-      event_sources = []
-      tag.tags.each do |subtag|
-        event_sources = event_sources | self.sources_for_tagname(subtag)
-      end
-      return event_sources
-    end
-    tag.event_sources
+    tag.resolved_event_sources
   end
 
   def self.names_for_tagname(tagname)
     tags = Tag.by_name(:key => tagname)
     tag = Tag.find(tags[0]["_id"])
-    if (!tag.tags.empty?) then
-      event_names = []
-      tag.tags.each do |subtag|
-        event_names = event_names | self.names_for_tagname(subtag)
-      end
-      return event_names
-    end
-    tag.event_names
+    tag.resolved_event_names
   end
 
 end

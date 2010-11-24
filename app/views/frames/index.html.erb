@@ -1,9 +1,8 @@
-<h1>Screen</h1>
+<%= stylesheet_link_tag "frames/frames" %>
+<%= javascript_include_tag "frames/index" %>
 
 <div id="frames">
-  <%=
-    render :partial => "frame", :locals => { :frames => @frames }
-  %>
+  <%= render :partial => "frame", :locals => { :frames => @frames } %>
 </div>
 
 <div id="formarea">
@@ -26,5 +25,3 @@
   <div id="notice"><%=h flash[:notice] %></div>
 
 </div>
-
-<script type="text/javascript" src="/javascripts/screen/show.js"></script>

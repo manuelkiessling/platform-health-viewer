@@ -13,7 +13,18 @@
 </head>
 <body>
 
-<%= yield %>
+<div id="navigation">
+  <div id="apptitle">Platform Health Viewer</div>
+  <div id="menu">
+    <span id="menuitem_screen" class="menuitem"><%= link_to "Dashboard screen", "/screens/1/frames" %></span>
+    <span id="menuitem_tags" class="menuitem"><%= link_to "Tageditor", tags_path %></span>
+  </div>
+  <span id="addbutton">+</span>
+</div>
+
+<div id="content">
+  <%= yield %>
+</div>
 
 </body>
 </html>
