@@ -39,4 +39,11 @@ $(document).ready(function() {
     }
   });
 
+  $(".frame-delete").dblclick(function() {
+    jQuery.post( 'frames/' + $(this).attr('id').substring(12) + '.js',
+                   { _method: 'DELETE' },
+                   function(data, textStatus, XMLHttpRequest) {}
+    );
+  })
+
 });

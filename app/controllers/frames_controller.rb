@@ -36,4 +36,14 @@ class FramesController < ApplicationController
     end
   end
 
+  def destroy
+    frame = Frame.find(params[:id])
+    frame.delete
+
+    respond_to do |format|
+      format.html { redirect_to screen_frames_path }
+      format.js
+    end
+  end
+
 end

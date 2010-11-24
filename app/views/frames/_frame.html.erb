@@ -6,8 +6,14 @@
       width: <%= frame.width %>px;
       height: <%= frame.height %>px;
     }
+    #frame-delete_<%= frame.id %> {
+      position: absolute;
+      top: <%= frame.top - 20 %>px;
+      left: <%= frame.left %>px;
+    }
   </style>
 
+  <div id="frame-delete_<%= frame.id %>" class="frame-delete">x</div>
   <div id="frame_<%= frame.id %>" class="frame">
     <div class="frameheader">
       <%= frame.tag %>
