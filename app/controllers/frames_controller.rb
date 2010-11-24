@@ -18,6 +18,7 @@ class FramesController < ApplicationController
     f.save
     respond_to do |format|
       format.html { redirect_to screen_frames_path }
+      format.js
     end
   end
 
