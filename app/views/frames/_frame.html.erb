@@ -5,7 +5,6 @@
       left: <%= frame.left %>px;
       width: <%= frame.width %>px;
       height: <%= frame.height %>px;
-      z-index: 10<%= frame.id %>;
     }
   </style>
 
@@ -34,13 +33,13 @@
                                              Tag.sources_for_tagname(frame.tag),
                                              Tag.names_for_tagname(frame.tag)
                                             )
-    event_groups = Event.get_normalized_values_for_timerange(ets, 600, nil, nil)
+    event_groups = Event.get_normalized_values_for_timerange(ets, frame.width, nil, nil)
 
     x = []
     data = []
-    x << 600.times.collect
+    x << frame.width.times.collect
     zerodata = []
-    600.times { zerodata << 0 }
+    frame.width.times { zerodata << 0 }
     data << zerodata
     event_groups.each_pair do |event_type_id, values|
       gx = []

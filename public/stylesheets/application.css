@@ -12,7 +12,8 @@ body {
   width: 100%;
   background-color: #2f4f4f;
   padding: 8px;
-  z-index: 1000;
+  z-index: 2000;
+  border-bottom: 10px solid white;
 }
 
 #apptitle {
@@ -92,7 +93,7 @@ body {
   top: 139px;
   width: 255px;
   padding-top: 0;
-  z-index: 1001;
+  z-index: 2001;
 }
 
 #form {

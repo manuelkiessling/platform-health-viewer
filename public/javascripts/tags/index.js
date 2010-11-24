@@ -1,3 +1,26 @@
+function bindEventRenderer(tagId) {
+  $("#link_events_tagid_" + tagId).bind("ajax:success", function(event, data, status, xhr) {
+    $("#events_tagid_" + tagId).hide();
+    $("#events_tagid_" + tagId).html('');
+
+    var json = $.parseJSON(xhr.responseText);
+    for (key in json) {
+      $("#events_tagid_" + tagId).append(json[key].id);
+      $("#events_tagid_" + tagId).append("	");
+      $("#events_tagid_" + tagId).append(json[key].created_at);
+      $("#events_tagid_" + tagId).append("	");
+      $("#events_tagid_" + tagId).append(json[key].name);
+      $("#events_tagid_" + tagId).append("	");
+      $("#events_tagid_" + tagId).append(json[key].source);
+      $("#events_tagid_" + tagId).append("	");
+      $("#events_tagid_" + tagId).append(json[key].value);
+      $("#events_tagid_" + tagId).append("<br />");
+    }
+
+    $("#events_tagid_" + tagId).slideDown(400);
+  });
+}
+
 $(document).ready(function() {
 
   $("#menuitem_tags").addClass("active");
@@ -26,28 +49,5 @@ $(document).ready(function() {
   });
 
   $(".element").draggable({ revert: "valid", helper: "clone" });
-
-  function bindEventRenderer(tagId) {
-    $("#link_events_tagid_" + tagId).bind("ajax:success", function(event, data, status, xhr) {
-      $("#events_tagid_" + tagId).hide();
-      $("#events_tagid_" + tagId).html('');
-
-      var json = $.parseJSON(xhr.responseText);
-      for (key in json) {
-        $("#events_tagid_" + tagId).append(json[key].id);
-        $("#events_tagid_" + tagId).append("	");
-        $("#events_tagid_" + tagId).append(json[key].created_at);
-        $("#events_tagid_" + tagId).append("	");
-        $("#events_tagid_" + tagId).append(json[key].name);
-        $("#events_tagid_" + tagId).append("	");
-        $("#events_tagid_" + tagId).append(json[key].source);
-        $("#events_tagid_" + tagId).append("	");
-        $("#events_tagid_" + tagId).append(json[key].value);
-        $("#events_tagid_" + tagId).append("<br />");
-      }
-
-      $("#events_tagid_" + tagId).slideDown(400);
-    });
-  }
 
 });
