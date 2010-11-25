@@ -1,6 +1,10 @@
 HealthView::Application.routes.draw do
 
+  get "queue_event/create"
+
   root :to => "tags#index"
+
+  resources :queue_event
 
   resources :screens do
     resources :frames

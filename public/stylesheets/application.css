@@ -209,7 +209,7 @@ body {
 	display: inline-block;
 	padding: 8px;
 	background-color: #ffffd1;
-    z-index: 2000;
+    z-index: 3000;
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffd1), to(#ffff81));
     background: -moz-linear-gradient(#ffffd1, #ffff81);
 }
