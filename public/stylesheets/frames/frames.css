@@ -7,3 +7,16 @@
   width: 255px;
   padding-top: 0px;
 }
+
+.frame-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ddd;
+  color: #fff;
+  padding: 8px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+  display: none;
+  z-index: 200;
+}

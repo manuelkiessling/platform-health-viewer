@@ -6,15 +6,10 @@
       width: <%= frame.width %>px;
       height: <%= frame.height %>px;
     }
-    #frame-delete_<%= frame.id %> {
-      position: absolute;
-      top: <%= frame.top - 20 %>px;
-      left: <%= frame.left %>px;
-    }
   </style>
 
-  <div id="frame-delete_<%= frame.id %>" class="frame-delete">x</div>
   <div id="frame_<%= frame.id %>" class="frame">
+    <div id="frame-delete_<%= frame.id %>" class="frame-delete">x</div>
     <div class="frameheader">
       <%= frame.tag %>
       &nbsp;
@@ -61,15 +56,35 @@
   %>
 
   <script type="text/javascript">
-    function drawChartForFrame<%= frame.id %>(redraw) {
-      if (redraw) r<%= frame.id %>.clear();
-      r<%= frame.id %> = Raphael("frame_<%= frame.id %>_graph");
-      x = <%= x.inspect.to_s %>
-      data = <%= data.inspect.to_s %>
-      r<%= frame.id %>.g.linechart(30, 0, <%= frame.width %> - 60, <%= frame.height %> - 27, x, data, {nostroke: false, axis: "0 1 0 1", symbol: "", smooth: false, shade: true});
-      //r.g.linechart(20, 0, 200, 180, [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 4, 5], [4, 5, 6, 7, 8]], [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [12, 15, 16], [13, 15, 17, 11, 19]], {nostroke: false, axis: "0 0 1 1", symbol: "", smooth: false, shade: true});
-    }
-    drawChartForFrame<%= frame.id %>(false);
+    $(document).ready( function() {
+
+      function drawChartForFrame<%= frame.id %>(redraw) {
+        if (redraw) r<%= frame.id %>.clear();
+        r<%= frame.id %> = Raphael("frame_<%= frame.id %>_graph");
+        x = <%= x.inspect.to_s %>
+        data = <%= data.inspect.to_s %>
+        r<%= frame.id %>.g.linechart(50, 0, <%= frame.width %> - 100, <%= frame.height %> - 27, x, data, {nostroke: false, axis: "0 1 0 1", symbol: "", smooth: false, shade: true});
+      }
+      drawChartForFrame<%= frame.id %>(false);
+
+    
+      $("#frame_<%= frame.id %>").mouseenter(function() {
+        $("#frame-delete_<%= frame.id %>").fadeIn();
+      });
+
+      $("#frame-delete_<%= frame.id %>").mouseenter(function() {
+        $("#frame-delete_<%= frame.id %>").css('backgroundColor', '#f00');
+      });
+
+      $("#frame_<%= frame.id %>").mouseleave(function() {
+        $("#frame-delete_<%= frame.id %>").fadeOut();
+      });
+
+      $("#frame-delete_<%= frame.id %>").mouseleave(function() {
+        $("#frame-delete_<%= frame.id %>").css('backgroundColor', '#ddd');
+      });
+
+    });
   </script>
   
 <% end %>
