@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20101119231442) do
     t.datetime "updated_at"
   end
 
-  create_table "frames", :force => true do |t|
+  create_table "screens", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"

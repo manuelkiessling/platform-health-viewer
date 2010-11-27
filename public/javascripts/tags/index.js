@@ -50,4 +50,11 @@ $(document).ready(function() {
 
   $(".element").draggable({ revert: "valid", helper: "clone" });
 
+  $(".delete-button").click(function() {
+    jQuery.post( 'tags/' + $(this).attr('id').substring(11) + '.js',
+                   { _method: 'DELETE' },
+                   function(data, textStatus, XMLHttpRequest) {}
+    );
+  });
+
 });

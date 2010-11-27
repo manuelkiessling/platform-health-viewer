@@ -34,10 +34,20 @@ class TagsController < ApplicationController
 
   def index
     @tags = Tag.all
+    @event_types = EventType.all(:order => 'source ASC')
     respond_to do |format|
       format.html
       format.xml { render :xml => @tags.to_xml }
       format.json { render :json => @tags.to_json }
+    end
+  end
+
+  def destroy
+    tag = Tag.find(params[:id])
+    @tag_id = tag.id
+    tag.destroy
+    respond_to do |format|
+      format.js
     end
   end
 

@@ -6,6 +6,8 @@ HealthView::Application.routes.draw do
 
   resources :queue_event
 
+  resources :event_types
+
   resources :screens do
     resources :frames
   end

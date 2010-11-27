@@ -1,0 +1,128 @@
+#form.droppable-state-active {
+}
+
+#form.droppable-state-hover {
+  background-color: #f1f1d8;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f9f9e0), to(#f1f1d8));
+  background: -moz-linear-gradient(#f9f9e0, #f1f1d8);
+}
+
+.events {
+  background-color: white;
+  font-family: "Courier New", courier;
+  font-size: 8pt;
+  padding: 8px;
+  margin: 4px;
+  margin-top: 16px;
+  display: none;
+}
+
+#tags {
+  width: 600px;
+  left: 270px;
+  margin-top: 80px;
+  display: inline-block;
+  position: absolute;
+}
+
+.tag, .box {
+    padding-left: 8px;
+	padding-bottom: 16px;
+	padding-right: 8px;
+	padding-top: 8px;
+	margin-bottom: 10px;
+	min-width: 100px;
+	display: block;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background: #f2f2f2;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f9f9f9), to(#ececec));
+    background: -moz-linear-gradient(#f9f9f9, #ececec);
+    -webkit-box-shadow: #aaa 1px 1px 4px;
+    -moz-box-shadow: #aaa 1px 1px 4px;
+    box-shadow: #aaa 1px 1px 4px;
+}
+
+div.tag .header-box {
+
+}
+
+div.tag .header-box .left {
+  float: left;
+}
+
+div.tag .header-box .right {
+  float: right;
+}
+
+.delete-button {
+  position: relative;
+  display: inline;
+  top: -7px;
+  right: -8px;
+}
+
+.tag .eventsarea {
+  padding-top: 16px;
+  padding-left: 4px;
+}
+
+.tag .eventsarea a {
+  font-size: 10pt;
+  color:  #a9a9a9;
+}
+
+h2 {
+	color: #006699;
+	margin-left: 0;
+	margin-bottom: 5px;
+	margin-right: 0;
+	margin-top: 0;
+	display: inline-block;
+	font-size: 12pt;
+	padding: 4px;
+}
+
+.tag .content {
+  padding-left: 4px;
+  margin-left: 1px;
+}
+
+.tag .content h3 {
+	display: inline-block;
+	font-size: 10pt;
+    font-weight: normal;
+    color: #222;
+    width: 90px;
+    padding: 6px;
+    margin: 2px;
+    border-left: 1px dotted gray;
+    border-bottom: 1px dotted gray;
+}
+
+.tag .content .elements {
+	display: inline;
+    margin-top: -1px;
+}
+
+.tag .content .elements .element, span.event_type {
+	font-family: "Courier New";
+    margin: 2px;
+	font-size: 10pt;
+	display: inline-block;
+	padding: 8px;
+	background-color: #ffffd1;
+    z-index: 3000;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffd1), to(#ffff81));
+    background: -moz-linear-gradient(#ffffd1, #ffff81);
+}
+
+span.event_type {
+}
+
+#event_types {
+  display: inline-block;
+  position: absolute;
+  top: 140px;
+}

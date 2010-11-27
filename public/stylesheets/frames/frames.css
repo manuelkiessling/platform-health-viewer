@@ -1,22 +1,23 @@
-#formarea {
+.frame {
   display: inline-block;
-  position: fixed;
-  left: auto;
-  right: 24px;
-  top: 58px;
-  width: 255px;
-  padding-top: 0px;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid lightgray;
+  padding: 0;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -webkit-box-shadow: 2px 2px 3px #ddd;
 }
 
-.frame-delete {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #ddd;
-  color: #fff;
+.frame .frameheader {
   padding: 8px;
-  padding-top: 2px;
-  padding-bottom: 3px;
-  display: none;
-  z-index: 200;
+  padding-left: 48px;
+  color: gray;
+  font-family: "Courier New", Courier, sans-serif;
+  font-size: 12px;
+}
+
+svg text {
+  fill: lightgray;
 }

@@ -1,5 +1,13 @@
 <%= div_for tag do %>
-  <h2 class="name"><%= tag.name %></h2>
+  <div class="header-box">
+    <div class="left">
+      <h2 class="boxtitle name"><%= tag.name %></h2>
+    </div>
+    <div class="right">
+      <div id="tag-delete_<%= tag.id %>" class="tag-delete delete-button">x</div>
+    </div>
+  </div>
+  <br clear="all" />
 
   <div class="content">
     <% if (!tag.tags.empty?) then %>
@@ -52,6 +60,28 @@
 
       <script type="text/javascript">
         bindEventRenderer("<%= tag.id %>");
+
+        $(document).ready( function() {
+
+          $("#tag-delete_<%= tag.id %>").hide();
+
+          $("#tag_<%= tag.id %>").mouseenter(function() {
+            $("#tag-delete_<%= tag.id %>").fadeIn();
+          });
+
+          $("#tag-delete_<%= tag.id %>").mouseenter(function() {
+            $("#tag-delete_<%= tag.id %>").css('backgroundColor', '#f00');
+          });
+
+          $("#tag_<%= tag.id %>").mouseleave(function() {
+            $("#tag-delete_<%= tag.id %>").fadeOut();
+          });
+
+          $("#tag-delete_<%= tag.id %>").mouseleave(function() {
+            $("#tag-delete_<%= tag.id %>").css('backgroundColor', '#ddd');
+          });
+
+        });
       </script>
 
     </div>

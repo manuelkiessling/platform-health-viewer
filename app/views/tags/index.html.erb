@@ -1,7 +1,13 @@
+<%= stylesheet_link_tag "tags/tags" %>
 <%= javascript_include_tag "tags/index" %>
 
 <div id="tags">
   <%= render :partial => @tags, :locals => { :list => true } %>
+</div>
+
+<div id="event_types" class="box">
+  <h2 class="boxtitle">All event types</h2>
+  <%= render :partial => @event_types, :locals => { :list => true } %>
 </div>
 
 <div id="formarea">
