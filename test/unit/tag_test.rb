@@ -35,6 +35,15 @@ class TagTest < ActiveSupport::TestCase
     t.tags << "TESTcrons"
     t.tags << "TESTwebs"
     t.save
+
+    t = Tag.new
+    t.name = "TESTmetaWithSourcesAndNames"
+    t.tags << "TESTcrons"
+    t.tags << "TESTwebs"
+    t.event_sources << "source_for_meta"
+    t.event_names << "name_for_meta1"
+    t.event_names << "name_for_meta2"
+    t.save
   end
 
   teardown do
@@ -57,6 +66,12 @@ class TagTest < ActiveSupport::TestCase
     end
 
     tags = Tag.by_name(:key => "TESTmeta")
+    tags.each do |tag|
+      t = Tag.find(tag["_id"])
+      t.destroy
+    end
+
+    tags = Tag.by_name(:key => "TESTmetaWithSourcesAndNames")
     tags.each do |tag|
       t = Tag.find(tag["_id"])
       t.destroy
@@ -105,6 +120,24 @@ class TagTest < ActiveSupport::TestCase
     t = Tag.find(t[0]["_id"])
     actual = t.resolved_event_names
     expected = ["cpu_load", "free_mem", "free_space"]
+
+    assert_equal(expected, actual)
+  end
+
+  test "must return array with sources for TESTmetaWithSourcesAndNames instance" do
+    t = Tag.by_name(:key => "TESTmetaWithSourcesAndNames")
+    t = Tag.find(t[0]["_id"])
+    actual = t.resolved_event_sources
+    expected = ["source_for_meta", "TESTcron01", "TESTcron02", "TESTweb01", "TESTweb04"]
+
+    assert_equal(expected, actual)
+  end
+
+  test "must return array with names for TESTmetaWithSourcesAndNames instance" do
+    t = Tag.by_name(:key => "TESTmetaWithSourcesAndNames")
+    t = Tag.find(t[0]["_id"])
+    actual = t.resolved_event_names
+    expected = ["name_for_meta1", "name_for_meta2", "cpu_load", "free_mem", "free_space"]
 
     assert_equal(expected, actual)
   end

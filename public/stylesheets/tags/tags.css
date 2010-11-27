@@ -82,6 +82,7 @@ h2 {
 	display: inline-block;
 	font-size: 12pt;
 	padding: 4px;
+    z-index: 3000;
 }
 
 .tag .content {

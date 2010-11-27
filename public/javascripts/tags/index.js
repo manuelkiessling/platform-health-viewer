@@ -31,7 +31,7 @@ $(document).ready(function() {
     drop: function( event, ui ) {
       $(this).addClass( "droppable-state-dropped" );
 
-      if (ui.draggable.hasClass("subtag")) {
+      if (ui.draggable.hasClass("subtag") || ui.draggable.hasClass("tagname")) {
         document.getElementById("tag_tags").value = ui.draggable.text() + ", " + document.getElementById("tag_tags").value;
       } else if (ui.draggable.hasClass("source")) {
         document.getElementById("tag_event_sources").value = ui.draggable.text() + ", " + document.getElementById("tag_event_sources").value;
@@ -49,6 +49,7 @@ $(document).ready(function() {
   });
 
   $(".element").draggable({ revert: "valid", helper: "clone" });
+  $(".tagname").draggable({ revert: "valid", helper: "clone" });
 
   $(".delete-button").click(function() {
     jQuery.post( 'tags/' + $(this).attr('id').substring(11) + '.js',

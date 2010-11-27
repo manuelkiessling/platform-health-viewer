@@ -21,25 +21,23 @@ class Tag < CouchRest::Model::Base
   end
 
   def resolved_event_sources
+    event_sources = []
     if (!self.tags.empty?) then
-      event_sources = []
       self.tags.each do |subtag|
         event_sources = event_sources | Tag.sources_for_tagname(subtag)
       end
-      return event_sources
     end
-    self.event_sources
+    self.event_sources | event_sources
   end
 
   def resolved_event_names
+    event_names = []
     if (!self.tags.empty?) then
-      event_names = []
       self.tags.each do |subtag|
         event_names = event_names | Tag.names_for_tagname(subtag)
       end
-      return event_names
     end
-    self.event_names
+    self.event_names | event_names
   end
 
   def self.sources_for_tagname(tagname)

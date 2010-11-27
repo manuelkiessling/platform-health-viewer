@@ -13,12 +13,9 @@ class TagsController < ApplicationController
   def create
     @tag = Tag.new
     @tag.name = params[:tag][:name]
-    if (!params[:tag][:tags].empty?) then
-      @tag.tags = TagsController.get_splitted_string(params[:tag][:tags])
-    else
-      @tag.event_sources = TagsController.get_splitted_string(params[:tag][:event_sources])
-      @tag.event_names = TagsController.get_splitted_string(params[:tag][:event_names])
-    end
+    @tag.tags = TagsController.get_splitted_string(params[:tag][:tags])
+    @tag.event_sources = TagsController.get_splitted_string(params[:tag][:event_sources])
+    @tag.event_names = TagsController.get_splitted_string(params[:tag][:event_names])
     begin
       @tag.save
       flash[:notice] = "Tag created"
