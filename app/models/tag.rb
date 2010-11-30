@@ -11,8 +11,8 @@ class Tag < CouchRest::Model::Base
     # TODO: This should be done within CouchDB
     if (!tags.empty?) then
       tags.each do |tag|
-        ts = Tag.by_name(:key => tag)
-        if (ts.empty?) then
+        t = Tag.find_by_name(tag)
+        if (t.nil?) then
           raise Exception.new("No tag by the name '" + tag + "', can't add to metatag")
         end
       end
@@ -41,14 +41,12 @@ class Tag < CouchRest::Model::Base
   end
 
   def self.sources_for_tagname(tagname)
-    tags = Tag.by_name(:key => tagname)
-    tag = Tag.find(tags[0]["_id"])
+    tag = Tag.find_by_name(tagname)
     tag.resolved_event_sources
   end
 
   def self.names_for_tagname(tagname)
-    tags = Tag.by_name(:key => tagname)
-    tag = Tag.find(tags[0]["_id"])
+    tag = Tag.find_by_name(tagname)
     tag.resolved_event_names
   end
 

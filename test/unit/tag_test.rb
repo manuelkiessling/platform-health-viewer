@@ -107,8 +107,7 @@ class TagTest < ActiveSupport::TestCase
   end
 
   test "must return array with sources for metatag instance" do
-    t = Tag.by_name(:key => "TESTmeta")
-    t = Tag.find(t[0]["_id"])
+    t = Tag.find_by_name("TESTmeta")
     actual = t.resolved_event_sources
     expected = ["TESTcron01", "TESTcron02", "TESTweb01", "TESTweb04"]
 
@@ -116,8 +115,7 @@ class TagTest < ActiveSupport::TestCase
   end
 
   test "must return array with names for metatag instance" do
-    t = Tag.by_name(:key => "TESTmeta")
-    t = Tag.find(t[0]["_id"])
+    t = Tag.find_by_name("TESTmeta")
     actual = t.resolved_event_names
     expected = ["cpu_load", "free_mem", "free_space"]
 
@@ -125,8 +123,7 @@ class TagTest < ActiveSupport::TestCase
   end
 
   test "must return array with sources for TESTmetaWithSourcesAndNames instance" do
-    t = Tag.by_name(:key => "TESTmetaWithSourcesAndNames")
-    t = Tag.find(t[0]["_id"])
+    t = Tag.find_by_name("TESTmetaWithSourcesAndNames")
     actual = t.resolved_event_sources
     expected = ["source_for_meta", "TESTcron01", "TESTcron02", "TESTweb01", "TESTweb04"]
 
@@ -134,8 +131,7 @@ class TagTest < ActiveSupport::TestCase
   end
 
   test "must return array with names for TESTmetaWithSourcesAndNames instance" do
-    t = Tag.by_name(:key => "TESTmetaWithSourcesAndNames")
-    t = Tag.find(t[0]["_id"])
+    t = Tag.find_by_name("TESTmetaWithSourcesAndNames")
     actual = t.resolved_event_names
     expected = ["name_for_meta1", "name_for_meta2", "cpu_load", "free_mem", "free_space"]
 
