@@ -7,7 +7,11 @@ class QueueEventController < ApplicationController
     qe.created_at = Time.zone.now
     qe.save
 
-    render :json => qe.to_json
+    respond_to do |format|
+      format.html { render :json => qe.to_json }
+      format.xml { render :xml => @tags.to_xml }
+      format.json { render :json => qe.to_json }
+    end
   end
 
 end
