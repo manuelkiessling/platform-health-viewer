@@ -11,11 +11,15 @@ class FramesController < ApplicationController
   end
 
   def create
-    f = Frame.new(params[:frame])
-    f.top = 10
-    f.left = 10
-    f.screen = Screen.find(params[:screen_id])
-    f.save
+    begin
+      f = Frame.new(params[:frame])
+      f.top = 10
+      f.left = 10
+      f.screen = Screen.find(params[:screen_id])
+      f.save
+    rescue Exception => e
+      flash[:error] = "Error: " + e.message
+    end
     respond_to do |format|
       format.html { redirect_to screen_frames_path }
       format.js

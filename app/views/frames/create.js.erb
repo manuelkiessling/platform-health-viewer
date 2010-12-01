@@ -1,1 +1,5 @@
-window.location.reload();
+<% if flash[:error] then %>
+  window.alert('<%= escape_javascript(flash.delete(:error)) %>');
+<% else %>
+  window.location.reload();
+<% end %>
