@@ -30,39 +30,26 @@
 
   <%
 
-    ets = EventType.find_by_sources_and_names(
-                                             Tag.sources_for_tagname(frame.tag),
-                                             Tag.names_for_tagname(frame.tag)
-                                            )
-    event_groups = Event.get_normalized_values_for_timerange(ets, frame.width, nil, nil)
+    average = nil
 
-    x = []
-    data = []
-    x << frame.width.times.collect
-    zerodata = []
-    frame.width.times { zerodata << 0 }
-    data << zerodata
-    event_groups.each_pair do |event_type_id, values|
-      gx = []
-      gdata = []
-      values.keys.sort.each do |key|
-        gx << key
-        gdata << values[key]
-      end
-      x << gx
-      data << gdata
-    end
+    events = EventType.find_by_sources_and_names(
+                                                 Tag.sources_for_tagname(frame.tag),
+                                                 Tag.names_for_tagname(frame.tag)
+                                                )
+    event_groups = Event.get_normalized_values_for_timerange(events, frame.width, nil, average)
+    num_cols = frame.width
+    num_cols = frame.width / average unless average.nil?
+    raphael_events = prepare_events_for_raphael(event_groups, num_cols)
 
   %>
 
   <script type="text/javascript">
     $(document).ready( function() {
 
-      function drawChartForFrame<%= frame.id %>(redraw) {
-        if (redraw) r<%= frame.id %>.clear();
+      function drawChartForFrame<%= frame.id %>() {
         r<%= frame.id %> = Raphael("frame_<%= frame.id %>_graph");
-        x = <%= x.inspect.to_s %>
-        data = <%= data.inspect.to_s %>
+        x = <%= raphael_events["x"] %>
+        data = <%= raphael_events["data"] %>
         r<%= frame.id %>.g.linechart(50, 0, <%= frame.width %> - 100, <%= frame.height %> - 27, x, data, {nostroke: false, axis: "0 1 0 1", symbol: "", smooth: false, shade: true});
       }
       drawChartForFrame<%= frame.id %>(false);
