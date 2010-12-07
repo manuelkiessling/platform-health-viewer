@@ -31,14 +31,15 @@
   <%
 
     average = nil
+    average = @timerange / frame.width unless frame.width >= @timerange
 
     events = EventType.find_by_sources_and_names(
                                                  Tag.sources_for_tagname(frame.tag),
                                                  Tag.names_for_tagname(frame.tag)
                                                 )
-    event_groups = Event.get_normalized_values_for_timerange(events, frame.width, nil, average)
-    num_cols = frame.width
-    num_cols = frame.width / average unless average.nil?
+    event_groups = Event.get_normalized_values_for_timerange(events, @timerange, @starttime, average)
+    num_cols = @timerange
+    num_cols = @timerange / average unless average.nil?
     raphael_events = prepare_events_for_raphael(event_groups, num_cols)
 
   %>

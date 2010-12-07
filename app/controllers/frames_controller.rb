@@ -3,6 +3,9 @@ class FramesController < ApplicationController
   def index
     @screen = Screen.find(params[:screen_id])
     @frames = @screen.frames
+    @starttime = nil
+    @timerange = 3600
+    @timerange = params[:timerange].to_i unless params[:timerange].nil?
     respond_to do |format|
       format.html
       format.xml { render :xml => @frames.to_xml }

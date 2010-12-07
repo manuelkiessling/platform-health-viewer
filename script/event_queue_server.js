@@ -1,3 +1,5 @@
+/* watch "curl http://localhost:8888/?source=nodetester\&name=cpu_usr_percentage\&value=`sar 1 1| grep Average| cut -b 14-15 | ruby -pe 'puts $_.sub(" ", "%20")' | head -n 1`" */
+
 var util   = require("util"),
     sqlite = require("/Users/manuel/.node_libraries/sqlite"),
     http   = require("http"),
@@ -28,6 +30,7 @@ db.open("../db/development.sqlite3", function (error) {
             console.log("Event added to queue.");
             response.writeHead(200, {"Content-Type": "text/html"});
             response.write("Event added to queue.");
+            response.write("");
             response.end();
           }
         );
