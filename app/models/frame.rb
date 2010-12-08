@@ -10,8 +10,4 @@ class Frame < ActiveRecord::Base
     super
   end
 
-  def tag
-    super
-  end
-
 end
