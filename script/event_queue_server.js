@@ -29,8 +29,10 @@ db.open("../db/development.sqlite3", function (error) {
             if (error) throw error;
             console.log("Event added to queue.");
             response.writeHead(200, {"Content-Type": "text/html"});
-            response.write("Event added to queue.");
-            response.write("");
+            response.write("Event added to queue:\n");
+            response.write("Source: " + q.query.source + "\n");
+            response.write("Name: " + q.query.name + "\n");
+            response.write("Value: " + q.query.value + "\n");
             response.end();
           }
         );
