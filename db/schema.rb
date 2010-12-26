@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20101207080932) do
 
   create_table "events", :force => true do |t|
     t.integer  "event_type_id"
-    t.float    "value",         :limit => 255
+    t.float    "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -164,7 +164,7 @@ class EventTest < ActiveSupport::TestCase
       Event.new do |e|
         e.value = i
         e.event_type = et1
-        e.created_at = t + i
+        e.created_at = t + (i * 60)
         e.save
       end
       i = i + 1
@@ -180,7 +180,7 @@ class EventTest < ActiveSupport::TestCase
       Event.new do |e|
         e.value = i * 2
         e.event_type = et2
-        e.created_at = t + i
+        e.created_at = t + (i * 60)
         e.save
       end
       i = i + 1
@@ -200,7 +200,7 @@ class EventTest < ActiveSupport::TestCase
                    }
                 }
 
-    normalized_events = Event.get_normalized_values_for_timerange([et1, et2], 10, Time.zone.parse("2010-11-19 11:55:10"), 5)
+    normalized_events = Event.get_normalized_values_for_timerange([et1, et2], 3600, Time.zone.parse("2010-11-19 11:55:10"), 5)
 
     actual = []
     normalized_events.each_pair do |event_type_id, values|

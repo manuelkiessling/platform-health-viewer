@@ -11,6 +11,8 @@ gem 'couchrest_model', :require => 'couchrest_model'
 #gem 'jquery-rails', :git => 'git://github.com/indirect/jquery-rails.git'
 gem 'jquery-rails'
 
+gem 'ruby-mysql'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

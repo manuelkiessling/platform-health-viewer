@@ -1,0 +1,37 @@
+SELECT AVG( value ),
+
+  CONCAT(EXTRACT(YEAR FROM created_at), '-',
+       EXTRACT(MONTH FROM created_at), '-',
+       EXTRACT(DAY FROM created_at), ' ',
+       EXTRACT(HOUR FROM created_at), ':',
+       FLOOR( EXTRACT( MINUTE FROM created_at ) / 2 ) * 2, ':',
+       '00') AS block,
+
+  created_at,
+  created_at
+FROM events
+WHERE event_type_id = 1
+GROUP BY block ORDER BY block DESC;
+
+
+
+
+
+
+
+SELECT event_type_id, AVG( value ),
+
+        CONCAT(
+          EXTRACT(YEAR FROM created_at), '-',
+          EXTRACT(MONTH FROM created_at), '-',
+          EXTRACT(DAY FROM created_at), ' ',
+          EXTRACT(HOUR FROM created_at), ':',
+          FLOOR( EXTRACT( MINUTE FROM created_at ) / 5 ) * 5, ':',
+          '00'
+        ) AS block,
+        created_at,
+        created_at
+      FROM events
+      WHERE
+        event_type_id IN (8,9)
+      GROUP BY event_type_id, block ORDER BY block DESC
