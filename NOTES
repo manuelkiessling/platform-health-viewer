@@ -35,3 +35,33 @@ SELECT event_type_id, AVG( value ),
       WHERE
         event_type_id IN (8,9)
       GROUP BY event_type_id, block ORDER BY block DESC
+
+
+
+
+
+sql = "SELECT event_type_id, AVG( value ) AS average,
+
+        CONCAT(
+          EXTRACT(YEAR FROM created_at), '-',
+          EXTRACT(MONTH FROM created_at), '-',
+          EXTRACT(DAY FROM created_at), ' ',
+          EXTRACT(HOUR FROM created_at), ':',
+          FLOOR( EXTRACT( MINUTE FROM created_at ) / ? ) * ?, ':',
+          '00'
+        ) AS block,
+        created_at
+      FROM events
+      WHERE
+            event_type_id IN (?)
+        AND created_at > ?
+        AND created_at <= ?
+      GROUP BY block ORDER BY block ASC"
+
+
+average = 5
+event_types = [12,13]
+begin_at = Time.zone.parse("2010-11-01 00:00:00")
+end_at = Time.zone.now
+
+rows = Event.find_by_sql([sql, average, average, event_types, begin_at.to_formatted_s(:db), end_at.to_formatted_s(:db)])

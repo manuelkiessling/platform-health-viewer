@@ -4,7 +4,7 @@ class FramesController < ApplicationController
     @screen = Screen.find(params[:screen_id])
     @frames = @screen.frames
     @starttime = nil
-    @timerange = 3600
+    @timerange = 600
     @timerange = params[:timerange].to_i unless params[:timerange].nil?
     respond_to do |format|
       format.html
@@ -16,7 +16,7 @@ class FramesController < ApplicationController
   def create
     begin
       f = Frame.new(params[:frame])
-      f.top = 10
+      f.top = 100
       f.left = 10
       f.screen = Screen.find(params[:screen_id])
       f.save
