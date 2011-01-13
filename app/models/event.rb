@@ -4,40 +4,18 @@ class Event < ActiveRecord::Base
 
   def self.get_normalized_values_for_timerange(event_types, range_in_seconds, end_at = nil, average = nil)
 
-    if (!average.nil?) then
+    average = 1 if average.nil?
 
-      rows = self.get_values_for_timerange(event_types, range_in_seconds, end_at, average)
+    rows = self.get_values_for_timerange(event_types, range_in_seconds, end_at, average)
 
-      event_groups = {}
-      i = 0
-      rows.each do |row|
-        puts i
-        if (event_groups[row.event_type_id].nil?) then
-          event_groups[row.event_type_id] = {}
-        end
-        event_groups[row.event_type_id][i] = row.average.to_f
-        i = i + 1
+    event_groups = {}
+    i = 0
+    rows.each do |row|
+      if (event_groups[row.event_type_id].nil?) then
+        event_groups[row.event_type_id] = {}
       end
-
-
-    else
-
-      events = Event.all(:conditions => [
-                            "event_type_id IN (?) AND created_at <= ? AND created_at > ?",
-                            event_types, end_at, begin_at
-                          ],
-                          :order => "created_at ASC"
-                        )
-
-      event_groups = {}
-      events.each do |event|
-        event_type_id = event.event_type_id
-        if (event_groups[event_type_id].nil?) then
-          event_groups[event_type_id] = {}
-        end
-        event_groups[event_type_id][(event.created_at - (begin_at)).to_int] = event.value
-      end
-
+      event_groups[row.event_type_id][row.block] = row.average.to_f
+      i = i + 1
     end
 
     event_groups
@@ -45,7 +23,7 @@ class Event < ActiveRecord::Base
 
   def self.get_values_for_timerange(event_types, range_in_seconds, end_at = nil, average = nil)
     if (end_at.nil?) then
-      end_at = Time.zone.now
+      end_at = Time.zone.now 
     end
 
     begin_at = end_at - range_in_seconds
@@ -66,7 +44,7 @@ class Event < ActiveRecord::Base
           event_type_id IN (?)
       AND created_at > ?
       AND created_at <= ?
-    GROUP BY block,event_type_id ORDER BY block ASC"
+    GROUP BY block, event_type_id ORDER BY block ASC"
 
     Event.find_by_sql([sql, average, average, event_types, begin_at.to_formatted_s(:db), end_at.to_formatted_s(:db)])
   end
