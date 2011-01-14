@@ -4,7 +4,7 @@ HealthView::Application.routes.draw do
 
   root :to => "tags#index"
 
-  resources :queue_event
+  resources :queue_event, :only => :create
 
   resources :event_types
 
@@ -13,7 +13,7 @@ HealthView::Application.routes.draw do
   end
 
   resources :tags do
-    resources :events do
+    resources :events, :only => :index do
       collection do
         get 'latest'
       end
