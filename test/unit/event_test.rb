@@ -7,80 +7,25 @@ class EventTest < ActiveSupport::TestCase
   end
 
   teardown do
-    ets = EventType.all
-    ets.each do |et|
-      et.delete
-    end
-
-    es = Event.all
-    es.each do |e|
-      e.delete
-    end
+    EventType.delete_all
+    Event.delete_all
   end
 
   test "must have existing event_type_id" do
-    e = Event.new
-    e.value = "4783"
-    assert !e.save, "Could save with non-existant event_type_id"
+    event = Event.new(:value => '4783')
+    assert !event.save, "Could save with non-existant event_type_id"
   end
 
   test "works with existing event_type_id" do
-    et = EventType.new
-    et.name = "test"
-    et.source = "testserver"
-    et.save
+    event_type = EventType.create!(:name => 'test', :source => 'testserver')
 
-    e = Event.new
-    e.event_type = et
-    e.value = "4783"
-    assert e.save, "Could not save with existant event_type_id"
-  end
-
-  test "get full events for certain event types" do
-    et1 = EventType.new
-    et1.source = "TESTcron01"
-    et1.name = "cpu_load"
-    et1.save
-
-    e1 = Event.new
-    e1.event_type = et1
-    e1.value = "0.11"
-    e1.created_at = "2010-11-01 15:43:26.642887"
-    e1.save
-
-    e2 = Event.new
-    e2.event_type = et1
-    e2.value = "0.12"
-    e2.created_at = "2010-11-01 15:43:26.642887"
-    e2.save
-
-    et2 = EventType.new
-    et2.source = "TESTcron02"
-    et2.name = "cpu_load"
-    et2.save
-
-    e3 = Event.new
-    e3.event_type = et2
-    e3.value = "0.21"
-    e3.created_at = "2010-11-01 15:43:26.642887"
-    e3.save
-
-    events = Event.find_all_by_event_type_id([et1.id, et2.id])
-
-    assert_equal([e1, e2, e3], events)
+    event = Event.new(:event_type => event_type, :value => '4783')
+    assert event.save, "Could not save with existant event_type_id"
   end
 
   test "get grouped and normalized event list, no average" do
-    et1 = EventType.new
-    et1.source = "TESTcron01"
-    et1.name = "cpu_load"
-    et1.save
-
-    e0 = Event.new
-    e0.event_type = et1
-    e0.value = "0.001"
-    e0.created_at = "2010-11-01 15:43:06"
-    e0.save
+    et1 = EventType.create!(:source => 'TESTcron01', :name => 'cpu_load')
+    e0  = Event.create!(:event_type => et1, :value => '0.001', :created_at => '2010-11-01 15:43:06')
 
     e1 = Event.new
     e1.event_type = et1
@@ -88,9 +33,9 @@ class EventTest < ActiveSupport::TestCase
     e1.created_at = "2010-11-01 15:43:10"
     e1.save
 
-    e2 = Event.new
+    e2            = Event.new
     e2.event_type = et1
-    e2.value = "0.2"
+    e2.value      = "0.2"
     e2.created_at = "2010-11-01 15:43:13"
     e2.save
 
