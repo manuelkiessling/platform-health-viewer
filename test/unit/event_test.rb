@@ -70,7 +70,7 @@ class EventTest < ActiveSupport::TestCase
     assert_equal([e1, e2, e3], events)
   end
 
-  test "get grouped and normalized event list with average" do
+  test "get grouped and averaged event list" do
     t = Time.zone.parse("2010-11-19 11:55:00")
 
     et1 = EventType.new
@@ -127,7 +127,10 @@ class EventTest < ActiveSupport::TestCase
                    }
                 }
 
-    normalized_events = Event.get_normalized_values_for_timerange([et1, et2], 200000, Time.zone.parse("2010-11-20 12:55:00"), 5)
+    normalized_events = Event.get_grouped_and_averaged_values_for_timerange(:event_types => [et1, et2],
+                                                                            :range_in_seconds => 1200,
+                                                                            :end_at => Time.zone.parse("2010-11-19 12:15:00"),
+                                                                            :chunk_size => 5)
 
     actual = []
     normalized_events.each_pair do |event_type_id, values|
