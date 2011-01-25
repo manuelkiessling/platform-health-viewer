@@ -12,20 +12,32 @@ class Event < ActiveRecord::Base
     options[:begin_at] = options[:end_at] - options[:range_in_seconds]
     options[:chunk_size] = options[:chunk_size] || 1
     
+    
+    averages = {}
+    rows = self.get_values_for_timerange(options)
+    rows.each do |row|
+      if (averages[row.event_type_id].nil?)
+        averages[row.event_type_id] = {}
+      end
+      averages[row.event_type_id][row.chunk] = row.average.to_f
+    end
+
     chunks = self.get_time_chunks(options[:begin_at], options[:end_at], options[:chunk_size])
     event_groups = {}
-
+    i = 0
     event_types.each do |event_type|
-      event_groups[event_type.id] = {}
+      event_groups[i] = {"event_type_id" => event_type.id, "values" => {}}
+      j = 0
       chunks.each do |chunk|
-        event_groups[event_type.id][chunk] = 0.0
+        if (averages[event_type.id][chunk].nil?)
+          event_groups[i]["values"][j] = {"chunk" => chunk, "value" => 0.0}
+        else
+          event_groups[i]["values"][j] = {"chunk" => chunk, "value" => averages[event_type.id][chunk]}
+        end
+        
+        j = j + 1
       end
-    end
-    
-    rows = self.get_values_for_timerange(options)
-
-    rows.each do |row|
-      event_groups[row.event_type_id][row.chunk] = row.average.to_f
+      i = i + 1
     end
 
     event_groups

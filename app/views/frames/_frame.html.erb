@@ -1,3 +1,25 @@
+<!--
+
+<{0=>
+  {"values"=>
+    {0=>{"chunk"=>"2010-11-19 11:55:00", "value"=>2.5},
+     1=>{"chunk"=>"2010-11-19 12:00:00", "value"=>7.0},
+     2=>{"chunk"=>"2010-11-19 12:05:00", "value"=>11.0},
+     3=>{"chunk"=>"2010-11-19 12:10:00", "value"=>0.0},
+     4=>{"chunk"=>"2010-11-19 12:15:00", "value"=>0.0}},
+   "event_type_id"=>980190965},
+ 1=>
+  {"values"=>
+    {0=>{"chunk"=>"2010-11-19 11:55:00", "value"=>5.0},
+     1=>{"chunk"=>"2010-11-19 12:00:00", "value"=>14.0},
+     2=>{"chunk"=>"2010-11-19 12:05:00", "value"=>22.0},
+     3=>{"chunk"=>"2010-11-19 12:10:00", "value"=>0.0},
+     4=>{"chunk"=>"2010-11-19 12:15:00", "value"=>0.0}},
+   "event_type_id"=>980190966}}>.
+
+-->
+
+
 <% frames.each do |frame| %>
   <style>
     #frame_<%= frame.id %>, #frame_<%= frame.id %>_graph {
@@ -7,6 +29,33 @@
       height: <%= frame.height %>px;
     }
   </style>
+
+  <%
+    
+	 event_types = EventType.find_by_sources_and_names(
+	                Tag.sources_for_tagname(frame.tag),
+	                Tag.names_for_tagname(frame.tag))
+
+	 averaged_events = Event.get_grouped_and_averaged_values_for_timerange(:event_types => event_types,
+	                                                                       :range_in_seconds => @timerange,
+	                                                                       :end_at => @starttime,
+	                                                                       :chunk_size => 1)
+    event_type_names = ""
+	 event_type_average_values = ""
+	
+	 averaged_events.each_pair do |i, averaged_event|
+		event_type_names = event_type_names + averaged_event["event_type_id"].to_s + "|"
+		event_type_average_values = event_type_average_values + "-1|"
+		averaged_event["values"].each_pair do |j, value|
+			event_type_average_values = event_type_average_values.to_s + value["value"].to_s + ","
+		end
+		event_type_average_values = event_type_average_values[0..-2]
+		event_type_average_values = event_type_average_values + "|"
+	 end
+    event_type_names = event_type_names[0..-2]
+	 event_type_average_values = event_type_average_values[0..-2]
+	
+  %>
 
   <div id="frame_<%= frame.id %>" class="frame">
     <div id="frame-delete_<%= frame.id %>" class="frame-delete delete-button">x</div>
@@ -25,54 +74,11 @@
 
     <span></span>
     
-    <div id="frame_<%= frame.id %>_graph"></div>
+    <div id="frame_<%= frame.id %>_graph">
+	 	<img src="http://chart.apis.google.com/chart?chs=<%= frame.width %>x<%= frame.height %>&cht=lc&chco=3072F3,FF0000,FFFF00,FF00FF&chd=t:<%= event_type_average_values %>&chdl=<%= event_type_names %>&chdlp=b&chls=1|1|1|1&chma=0,0,0,0" width="<%= frame.width %>" height="<%= frame.height %>" alt="" />
+	 </div>
+	
   </div>
 
-  <%
 
-    average = nil
-    average = @timerange / frame.width unless frame.width >= @timerange
-
-    events = EventType.find_by_sources_and_names(
-                                                 Tag.sources_for_tagname(frame.tag),
-                                                 Tag.names_for_tagname(frame.tag)
-                                                )
-    event_groups = Event.get_normalized_values_for_timerange(events, @timerange, @starttime, average)
-    num_cols = @timerange
-    num_cols = @timerange / average unless average.nil?
-    raphael_events = prepare_events_for_raphael(event_groups, num_cols)
-
-  %>
-
-  <script type="text/javascript">
-    $(document).ready( function() {
-
-      function drawChartForFrame<%= frame.id %>() {
-        r<%= frame.id %> = Raphael("frame_<%= frame.id %>_graph");
-        x = <%= raphael_events["x"] %>
-        data = <%= raphael_events["data"] %>
-        r<%= frame.id %>.g.linechart(50, 0, <%= frame.width %> - 100, <%= frame.height %> - 27, x, data, {nostroke: false, axis: "0 1 0 1", symbol: "", smooth: false, shade: true});
-      }
-      drawChartForFrame<%= frame.id %>(false);
-
-    
-      $("#frame_<%= frame.id %>").mouseenter(function() {
-        $("#frame-delete_<%= frame.id %>").fadeIn();
-      });
-
-      $("#frame-delete_<%= frame.id %>").mouseenter(function() {
-        $("#frame-delete_<%= frame.id %>").css('backgroundColor', '#f00');
-      });
-
-      $("#frame_<%= frame.id %>").mouseleave(function() {
-        $("#frame-delete_<%= frame.id %>").fadeOut();
-      });
-
-      $("#frame-delete_<%= frame.id %>").mouseleave(function() {
-        $("#frame-delete_<%= frame.id %>").css('backgroundColor', '#ddd');
-      });
-
-    });
-  </script>
-  
 <% end %>
