@@ -3,8 +3,8 @@
     #frame_<%= frame.id %>, #frame_<%= frame.id %>_graph {
       top: <%= frame.top %>px;
       left: <%= frame.left %>px;
-      width: <%= frame.width %>px;
-      height: <%= frame.height %>px;
+      width: <%= frame.width+4 %>px;
+      height: <%= frame.height+10 %>px;
     }
   </style>
 
@@ -23,12 +23,18 @@
   )
 
   event_type_names = get_event_type_names_for_google_graph(averaged_events)
+  event_type_colors = get_event_type_colors_for_google_graph(averaged_events)
   event_type_average_values = get_event_type_average_values_for_google_graph(averaged_events)
 
   %>
 
   <div id="frame_<%= frame.id %>" class="frame">
     <div id="frame-delete_<%= frame.id %>" class="frame-delete delete-button">x</div>
+  
+    <div id="frame_<%= frame.id %>_graph" style="padding-top: 6px; margin-right: 6px;">
+	 	  <img src="http://chart.apis.google.com/chart?chs=<%= frame.width %>x<%= frame.height %>&cht=lc&chxt=y&chg=10,-1,1,1&chco=<%= event_type_colors %>&chd=t:<%= event_type_average_values %>&chdl=<%= event_type_names %>&chdlp=b&chls=1|1|1|1&chma=0,0,0,0" width="<%= frame.width %>" height="<%= frame.height %>" alt="" />
+	  </div>
+
     <div class="frameheader">
       <%= frame.tag %>
       &nbsp;
@@ -41,12 +47,6 @@
         <%= n %>
       <% end %>
     </div>
-
-    <span></span>
-    
-    <div id="frame_<%= frame.id %>_graph">
-	 	  <img src="http://chart.apis.google.com/chart?chs=<%= frame.width %>x<%= frame.height %>&cht=lc&chco=3072F3,FF0000,FFFF00,FF00FF&chd=t:<%= event_type_average_values %>&chdl=<%= event_type_names %>&chdlp=b&chls=1|1|1|1&chma=0,0,0,0" width="<%= frame.width %>" height="<%= frame.height %>" alt="" />
-	  </div>
 	
   </div>
 
