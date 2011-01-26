@@ -112,20 +112,31 @@ class EventTest < ActiveSupport::TestCase
       e.save
     end
 
+    expected = {}
+    expected[0] = {}
+    expected[1] = {}
+    
+    expected[0] = {
+      "event_type_id" => et1.id,
+      "values" =>
+        { 0=>{"chunk"=>"2010-11-19 11:55:00", "value"=>2.5},
+          1=>{"chunk"=>"2010-11-19 12:00:00", "value"=>7.0},
+          2=>{"chunk"=>"2010-11-19 12:05:00", "value"=>11.0},
+          3=>{"chunk"=>"2010-11-19 12:10:00", "value"=>0.0},
+          4=>{"chunk"=>"2010-11-19 12:15:00", "value"=>0.0}
+        }
+    }
 
-    expected = []
-    expected << {"event_type_id" => et1.id,
-                 "values" =>
-                   { 0 => 3.0,
-                     1 => 8.0
-                   }
-                }
-     expected << {"event_type_id" => et2.id,
-                 "values" =>
-                   { 0 => 6.0,
-                     1 => 16.0,
-                   }
-                }
+    expected[1] = {
+      "event_type_id" => et2.id,
+      "values"=>
+        { 0=>{"chunk"=>"2010-11-19 11:55:00", "value"=>5.0},
+          1=>{"chunk"=>"2010-11-19 12:00:00", "value"=>14.0},
+          2=>{"chunk"=>"2010-11-19 12:05:00", "value"=>22.0},
+          3=>{"chunk"=>"2010-11-19 12:10:00", "value"=>0.0},
+          4=>{"chunk"=>"2010-11-19 12:15:00", "value"=>0.0}
+        }
+    }
 
     normalized_events = Event.get_grouped_and_averaged_values_for_timerange(:event_types => [et1, et2],
                                                                             :range_in_seconds => 1200,
