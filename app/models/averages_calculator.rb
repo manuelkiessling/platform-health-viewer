@@ -5,11 +5,14 @@ require "/Users/manuel/Dropbox/Projects/rbTimeChunker/lib/time_chunker.rb"
 class AveragesCalculator
 
   def calculate_for(options = {})
-    normalized_options = {}
-    normalized_options[:event_types] = options[:event_types]
-    normalized_options[:begin_at] = options[:between]
-    normalized_options[:end_at] = options[:and]
-    normalized_options[:chunk_size] = options[:in_chunks_of]
+    event_types = options[:event_types]
+    begin_at = options[:between]
+    end_at = options[:and]
+    chunk_size = options[:in_chunks_of]
+
+    values = retrieve_values(options[:begin_at], options[:end_at], options[:chunk_size])
+    chunks = get_time_chunks(options[:begin_at], options[:end_at], options[:chunk_size])
+
     get_grouped_and_averaged_values_for_timerange(normalized_options)
   end
 
@@ -63,7 +66,6 @@ class AveragesCalculator
 
    def get_values_for_timerange(options = {})
      event_types = options[:event_types]
-     range_in_seconds = options[:range_in_seconds]
      begin_at = options[:begin_at]
      end_at = options[:end_at]
      chunk_size = options[:chunk_size]
