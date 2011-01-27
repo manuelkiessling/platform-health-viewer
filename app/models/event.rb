@@ -12,7 +12,6 @@ class Event < ActiveRecord::Base
     options[:begin_at] = options[:end_at] - options[:range_in_seconds]
     options[:chunk_size] = options[:chunk_size] || 1
     
-    
     averages = {}
     rows = self.get_values_for_timerange(options)
     rows.each do |row|
@@ -68,22 +67,21 @@ class Event < ActiveRecord::Base
     chunk_size = options[:chunk_size]
 
     sql = "SELECT event_type_id, AVG( value ) AS average,
-
-      CONCAT(
-        EXTRACT(YEAR FROM created_at), '-',
-        LPAD(EXTRACT(MONTH FROM created_at), 2, '0'), '-',
-        LPAD(EXTRACT(DAY FROM created_at), 2, '0'), ' ',
-        LPAD(EXTRACT(HOUR FROM created_at), 2, '0'), ':',
-        LPAD( FLOOR( EXTRACT(MINUTE FROM created_at) / ? ) * ?, 2, '0'), ':',
-        '00'
-      ) AS chunk,
-      created_at
-    FROM events
-    WHERE
-          event_type_id IN (?)
-      AND created_at > ?
-      AND created_at <= ?
-    GROUP BY chunk, event_type_id ORDER BY chunk ASC"
+            CONCAT(
+              EXTRACT(YEAR FROM created_at), '-',
+              LPAD(EXTRACT(MONTH FROM created_at), 2, '0'), '-',
+              LPAD(EXTRACT(DAY FROM created_at), 2, '0'), ' ',
+              LPAD(EXTRACT(HOUR FROM created_at), 2, '0'), ':',
+              LPAD( FLOOR( EXTRACT(MINUTE FROM created_at) / ? ) * ?, 2, '0'), ':',
+              '00'
+            ) AS chunk,
+            created_at
+           FROM events
+           WHERE
+                event_type_id IN (?)
+            AND created_at > ?
+            AND created_at <= ?
+           GROUP BY chunk, event_type_id ORDER BY chunk ASC"
 
     Event.find_by_sql([sql, chunk_size, chunk_size, event_types, begin_at.to_formatted_s(:db), end_at.to_formatted_s(:db)])
   end

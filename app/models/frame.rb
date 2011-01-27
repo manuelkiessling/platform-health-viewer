@@ -3,8 +3,8 @@ class Frame < ActiveRecord::Base
   validates_presence_of :screen, :tag
 
   def tag=(tagname)
-    t = Tag.find_by_name(tagname)
-    if (t.nil?) then
+    tag = Tag.find_by_name(tagname)
+    if (tag.nil?) then
       raise Exception.new("No tag by the name '" + tagname + "'")
     end
     super
