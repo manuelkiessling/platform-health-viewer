@@ -10,36 +10,34 @@ class AveragesCalculator
     end_at = options[:and]
     chunk_size = options[:in_chunks_of]
 
-    values = retrieve_values(options[:begin_at], options[:end_at], options[:chunk_size])
-    chunks = get_time_chunks(options[:begin_at], options[:end_at], options[:chunk_size])
+    averages = compute_averages(event_types, begin_at, end_at, chunk_size)
+    chunks = get_time_chunks(begin_at, end_at, chunk_size)
 
-    get_grouped_and_averaged_values_for_timerange(normalized_options)
+    group_event_types_averages_and_chunks(event_types, averages, chunks)
   end
 
 
   private
 
-  def get_grouped_and_averaged_values_for_timerange(options = {})
-     averages = {}
-     rows = get_values_for_timerange(options)
-     rows.each do |row|
-       if (averages[row.event_type_id].nil?)
-         averages[row.event_type_id] = {}
+  def group_event_types_averages_and_chunks(event_types, averages, chunks)
+     result = {}
+     averages.each do |average|
+       if (result[average.event_type_id].nil?)
+         result[average.event_type_id] = {}
        end
-       averages[row.event_type_id][row.chunk] = row.average.to_f
+       result[average.event_type_id][average.chunk] = average.value.to_f
      end
 
-     chunks = get_time_chunks(options[:begin_at], options[:end_at], options[:chunk_size])
-     event_groups = {}
+     groups = {}
      i = 0
-     options[:event_types].each do |event_type|
-       event_groups[i] = {"event_type_id" => event_type.id, "values" => {}}
+     event_types.each do |event_type|
+       groups[i] = {"event_type_id" => event_type.id, "values" => {}}
        j = 0
        chunks.each do |chunk|
-         if (averages[event_type.id][chunk].nil?)
-           event_groups[i]["values"][j] = {"chunk" => chunk, "value" => 0.0}
+         if (result[event_type.id][chunk].nil?)
+           groups[i]["values"][j] = {"chunk" => chunk, "value" => 0.0}
          else
-           event_groups[i]["values"][j] = {"chunk" => chunk, "value" => averages[event_type.id][chunk]}
+           groups[i]["values"][j] = {"chunk" => chunk, "value" => result[event_type.id][chunk]}
          end
 
          j = j + 1
@@ -47,7 +45,7 @@ class AveragesCalculator
        i = i + 1
      end
 
-     event_groups
+     groups
    end
 
    def get_time_chunks(begin_at, end_at, chunk_size)
@@ -64,13 +62,8 @@ class AveragesCalculator
      return chunks_as_string
    end
 
-   def get_values_for_timerange(options = {})
-     event_types = options[:event_types]
-     begin_at = options[:begin_at]
-     end_at = options[:end_at]
-     chunk_size = options[:chunk_size]
-
-     sql = "SELECT event_type_id, AVG( value ) AS average,
+   def compute_averages(event_types, begin_at, end_at, chunk_size)
+     sql = "SELECT event_type_id, AVG( value ) AS value,
              CONCAT(
                EXTRACT(YEAR FROM created_at), '-',
                LPAD(EXTRACT(MONTH FROM created_at), 2, '0'), '-',
