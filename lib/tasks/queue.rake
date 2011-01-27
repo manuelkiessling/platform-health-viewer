@@ -1,24 +1,13 @@
 namespace :queue do
   task:convert => :environment do
-    qes = QueueEvent.all
-    qes.each do |qe|
-      puts "Handling event: " + qe.inspect.to_s
-      et = EventType.first(:conditions => { :source => qe.source, :name => qe.name } )
-      if (et.nil?) then
-        puts "Event type does not yet exist, creating..."
-        et = EventType.new
-        et.source = qe.source
-        et.name = qe.name
-        et.save
-      end
-      puts "Using event type: " + et.inspect.to_s
-      e = Event.new
-      e.event_type_id = et.id
-      e.value = qe.value
-      e.created_at = qe.created_at
-      e.save
-      puts "Created event: " + e.inspect.to_s
-      qe.delete
+    QueueEvent.all.each do |queue_event|
+      puts "Handling event: " + queue_event.inspect.to_s
+      event_type = EventType.find_or_create_by_source_and_name(:source => queue_event.source, :name => queue_event.name)
+      puts "Using event type: " + event_type.inspect.to_s
+
+      event = Event.create(:event_type => event_type, :value => queue_event.value, :created_at => queue_event.created_at)
+      puts "Created event: " + event.inspect.to_s
+      queue_event.delete
       puts "Deleted queue event"
     end
   end

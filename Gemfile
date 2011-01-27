@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0'
+gem 'rails'
 
 # Bundle edge Rails instead:
 #gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'couchrest_model', :require => 'couchrest_model'
+gem 'couchrest_model'
 
 #gem 'jquery-rails', :git => 'git://github.com/indirect/jquery-rails.git'
 gem 'jquery-rails'
