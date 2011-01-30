@@ -14,13 +14,13 @@
     Tag.sources_for_tagname(frame.tag),
     Tag.names_for_tagname(frame.tag)
   )
-
-  averaged_events = Event.get_grouped_and_averaged_values_for_timerange(
-    :event_types => event_types,
-    :range_in_seconds => @timerange,
-    :end_at => @starttime,
-    :chunk_size => 1
-  )
+  
+  averages_calculator = AveragesCalculator.new()
+  averaged_events = averages_calculator.calculate_for(:event_types  => event_types,
+                                                      :between      => Time.zone.now - @timerange,
+                                                      :and          => Time.zone.now,
+                                                      :in_chunks_of => 1,
+                                                      :minutes      => true)
 
   event_type_names = get_event_type_names_for_google_graph(averaged_events)
   event_type_colors = get_event_type_colors_for_google_graph(averaged_events)
