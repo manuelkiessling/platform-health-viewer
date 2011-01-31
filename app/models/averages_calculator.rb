@@ -28,18 +28,17 @@ class AveragesCalculator
       result[average.event_type_id][average.chunk] = average.value.to_f
     end
 
-    groups = {}
+    groups = []
     i = 0
     event_types.each do |event_type|
-      groups[i] = {"event_type_id" => event_type.id, "values" => {}}
+      groups[i] = {"event_type_id" => event_type.id, "values" => []}
       j = 0
       chunks.each do |chunk|
         if (result[event_type.id][chunk].nil?)
-          groups[i]["values"][j] = {"chunk" => chunk, "value" => 0.0}
+          groups[i]["values"][j] = {"chunk" => chunk, "value" => nil}
         else
           groups[i]["values"][j] = {"chunk" => chunk, "value" => result[event_type.id][chunk]}
         end
-
         j = j + 1
       end
       i = i + 1

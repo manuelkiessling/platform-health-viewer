@@ -19,7 +19,7 @@
   averaged_events = averages_calculator.calculate_for(:event_types  => event_types,
                                                       :between      => Time.zone.now - @timerange,
                                                       :and          => Time.zone.now,
-                                                      :in_chunks_of => 1,
+                                                      :in_chunks_of => @chunk_size,
                                                       :minutes      => true)
 
   event_type_names = get_event_type_names_for_google_graph(averaged_events)
