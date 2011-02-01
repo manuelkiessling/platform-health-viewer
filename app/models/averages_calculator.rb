@@ -34,10 +34,14 @@ class AveragesCalculator
       groups[i] = {"event_type_id" => event_type.id, "values" => []}
       j = 0
       chunks.each do |chunk|
-        if (result[event_type.id][chunk].nil?)
+        if (result[event_type.id].nil?)
           groups[i]["values"][j] = {"chunk" => chunk, "value" => nil}
         else
-          groups[i]["values"][j] = {"chunk" => chunk, "value" => result[event_type.id][chunk]}
+          if (result[event_type.id][chunk].nil?)
+            groups[i]["values"][j] = {"chunk" => chunk, "value" => nil}
+          else
+            groups[i]["values"][j] = {"chunk" => chunk, "value" => result[event_type.id][chunk]}
+          end
         end
         j = j + 1
       end

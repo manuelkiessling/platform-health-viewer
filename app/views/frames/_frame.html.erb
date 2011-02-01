@@ -22,17 +22,23 @@
                                                       :in_chunks_of => @chunk_size,
                                                       :minutes      => true)
 
-  event_type_names = get_event_type_names_for_google_graph(averaged_events)
-  event_type_colors = get_event_type_colors_for_google_graph(averaged_events)
-  event_type_average_values = get_event_type_average_values_for_google_graph(averaged_events)
+  graph_names = get_names_for_google_graph(averaged_events)
+  graph_colors = get_colors_for_google_graph(averaged_events)
+
+  graph_url = ::Gchart.line(:size => frame.width.to_s + "x" + frame.height.to_s,
+                            :line_colors => graph_colors,
+                            :labels => graph_names,
+                            :data => get_values_for_graphlib(averaged_events),
+                            :axis_with_labels => 'r'
+                           )
 
   %>
 
   <div id="frame_<%= frame.id %>" class="frame">
     <div id="frame-delete_<%= frame.id %>" class="frame-delete delete-button">x</div>
   
-    <div id="frame_<%= frame.id %>_graph" style="padding-top: 6px; margin-right: 6px;">
-	 	  <img src="http://chart.apis.google.com/chart?chs=<%= frame.width %>x<%= frame.height %>&cht=lc&chxt=y&chg=10,-1,1,1&chco=<%= event_type_colors %>&chd=t:<%= event_type_average_values %>&chdl=<%= event_type_names %>&chdlp=b&chls=1|1|1|1&chma=0,0,0,0" width="<%= frame.width %>" height="<%= frame.height %>" alt="" />
+    <div id="frame_<%= frame.id %>_graph" style="padding-top: 6px; margin-right: 6px;">      
+	 	  <img src="<%= graph_url %>" width="<%= frame.width %>" height="<%= frame.height %>" alt="" />
 	  </div>
 
     <div class="frameheader">

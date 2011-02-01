@@ -6,4 +6,3 @@ gem 'couchrest_model', :require => 'couchrest_model'
 gem 'jquery-rails'
 gem 'mysql2'
 gem 'googlecharts'
-
