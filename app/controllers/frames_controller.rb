@@ -6,6 +6,8 @@ class FramesController < ApplicationController
     @starttime = nil
     @timerange = 600
     @timerange = params[:timerange].to_i unless params[:timerange].nil?
+    @chunk_size = 1
+    @chunk_size = params[:chunk_size].to_i unless params[:chunk_size].nil?
     respond_to do |format|
       format.html
       format.xml { render :xml => @frames.to_xml }

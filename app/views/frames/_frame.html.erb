@@ -8,31 +8,16 @@
     }
   </style>
 
-  <%
-
-  event_types = EventType.find_by_sources_and_names(
-    Tag.sources_for_tagname(frame.tag),
-    Tag.names_for_tagname(frame.tag)
-  )
-
-  averaged_events = Event.get_grouped_and_averaged_values_for_timerange(
-    :event_types => event_types,
-    :range_in_seconds => @timerange,
-    :end_at => @starttime,
-    :chunk_size => 1
-  )
-
-  event_type_names = get_event_type_names_for_google_graph(averaged_events)
-  event_type_colors = get_event_type_colors_for_google_graph(averaged_events)
-  event_type_average_values = get_event_type_average_values_for_google_graph(averaged_events)
-
-  %>
 
   <div id="frame_<%= frame.id %>" class="frame">
     <div id="frame-delete_<%= frame.id %>" class="frame-delete delete-button">x</div>
   
-    <div id="frame_<%= frame.id %>_graph" style="padding-top: 6px; margin-right: 6px;">
-	 	  <img src="http://chart.apis.google.com/chart?chs=<%= frame.width %>x<%= frame.height %>&cht=lc&chxt=y&chg=10,-1,1,1&chco=<%= event_type_colors %>&chd=t:<%= event_type_average_values %>&chdl=<%= event_type_names %>&chdlp=b&chls=1|1|1|1&chma=0,0,0,0" width="<%= frame.width %>" height="<%= frame.height %>" alt="" />
+    <div id="frame_<%= frame.id %>_graph" style="padding-top: 6px; margin-right: 6px;">      
+	 	  <img src="<%= gchart_url_for_frame(:frame => frame, :timerange => @timerange, :chunk_size => @chunk_size) %>"
+	 	       width="<%= frame.width %>"
+	 	       height="<%= frame.height %>"
+	 	       alt=""
+	 	  />
 	  </div>
 
     <div class="frameheader">
