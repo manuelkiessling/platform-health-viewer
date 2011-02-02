@@ -8,37 +8,16 @@
     }
   </style>
 
-  <%
-
-  event_types = EventType.find_by_sources_and_names(
-    Tag.sources_for_tagname(frame.tag),
-    Tag.names_for_tagname(frame.tag)
-  )
-  
-  averages_calculator = AveragesCalculator.new()
-  averaged_events = averages_calculator.calculate_for(:event_types  => event_types,
-                                                      :between      => Time.zone.now - @timerange,
-                                                      :and          => Time.zone.now,
-                                                      :in_chunks_of => @chunk_size,
-                                                      :minutes      => true)
-
-  graph_names = get_names_for_google_graph(averaged_events)
-  graph_colors = get_colors_for_google_graph(averaged_events)
-
-  graph_url = ::Gchart.line(:size => frame.width.to_s + "x" + frame.height.to_s,
-                            :line_colors => graph_colors,
-                            :labels => graph_names,
-                            :data => get_values_for_graphlib(averaged_events),
-                            :axis_with_labels => 'r'
-                           )
-
-  %>
 
   <div id="frame_<%= frame.id %>" class="frame">
     <div id="frame-delete_<%= frame.id %>" class="frame-delete delete-button">x</div>
   
     <div id="frame_<%= frame.id %>_graph" style="padding-top: 6px; margin-right: 6px;">      
-	 	  <img src="<%= graph_url %>" width="<%= frame.width %>" height="<%= frame.height %>" alt="" />
+	 	  <img src="<%= gchart_url_for_frame(:frame => frame, :timerange => @timerange, :chunk_size => @chunk_size) %>"
+	 	       width="<%= frame.width %>"
+	 	       height="<%= frame.height %>"
+	 	       alt=""
+	 	  />
 	  </div>
 
     <div class="frameheader">
