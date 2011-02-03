@@ -19,8 +19,6 @@ module FramesHelper
   
   def data_for_gchart(averaged_events)
     all = []
-    event_type_average_values = ""
-
     averaged_events.each do |averaged_event|
       event_type_values = []
       averaged_event["values"].each do |value|
@@ -32,10 +30,20 @@ module FramesHelper
     return all
   end
   
+  def x_axis_label_for_gchart(averaged_events)
+    averaged_events.each do |averaged_event|
+      labels = ""
+      averaged_event["values"].each do |value|
+        labels = labels + value["chunk"] + '|'
+      end
+      return labels[0..-2]
+    end
+  end
+  
   def gchart_url_for_frame(options = {})
     event_types = EventType.find_by_sources_and_names(
-    Tag.sources_for_tagname(options[:frame].tag),
-    Tag.names_for_tagname(options[:frame].tag)
+      Tag.sources_for_tagname(options[:frame].tag),
+      Tag.names_for_tagname(options[:frame].tag)
     )
 
     averages_calculator = AveragesCalculator.new()
@@ -49,7 +57,8 @@ module FramesHelper
                   :line_colors => line_colors_for_gchart(averaged_events),
                   :labels => labels_for_gchart(averaged_events),
                   :data => data_for_gchart(averaged_events),
-                  :axis_with_labels => 'r')
+                  :axis_with_labels => 'x,r',
+                  :axis_labels => [x_axis_label_for_gchart(averaged_events)])
   end
 
 end
