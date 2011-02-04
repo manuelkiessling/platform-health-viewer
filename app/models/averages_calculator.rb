@@ -1,7 +1,3 @@
-require "/Users/manuel/Dropbox/Projects/rbTimeChunker/lib/time_range.rb"
-require "/Users/manuel/Dropbox/Projects/rbTimeChunker/lib/chunk_size.rb"
-require "/Users/manuel/Dropbox/Projects/rbTimeChunker/lib/time_chunker.rb"
-
 class AveragesCalculator
 
   def calculate_for(options = {})
@@ -52,11 +48,11 @@ class AveragesCalculator
   end
 
   def get_time_chunks(begin_at, end_at, chunk_size)
-    time_range = TimeRange.new(begin_at, end_at)
-    chunk_size = ChunkSize.new(chunk_size, 'minutes')
+    timerange = Timechunker::Timerange.new(begin_at, end_at)
+    chunksize = Timechunker::Chunksize.new(chunk_size, 'minutes')
 
-    time_chunker = TimeChunker.new
-    chunks = time_chunker.get_chunks(time_range, chunk_size)
+    chunker = Timechunker::Chunker.new
+    chunks = chunker.get_chunks(timerange, chunksize)
 
     chunks_as_string = []
     chunks.each do |chunk|
