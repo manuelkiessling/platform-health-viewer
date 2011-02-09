@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-HealthView::Application.load_tasks
+PlatformHealthViewer::Application.load_tasks

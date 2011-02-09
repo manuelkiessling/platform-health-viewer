@@ -1,4 +1,4 @@
-HealthView::Application.routes.draw do
+PlatformHealthViewer::Application.routes.draw do
 
   get "queue_event/create"
 
