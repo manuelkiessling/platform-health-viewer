@@ -16,36 +16,44 @@ into its server, without the need for any upfront configuration.
 In order to make data visualization as simple as possible, PHV offers an
 interactive web interface which allows you to freely place and resize graphs.
 
+
 ## Installation
 
 ### Debian GNU/Linux 6.0 Squeeze
 
-Assuming that we have a base system with the "Standard system utilities"
-collection installed, we need the following extra software to run PHV:
+Assuming that we have a base system with at least the "Standard system
+utilities" collection installed, we need the following extra software to
+run PHV:
 
  * Git
  * Ruby 1.8
  * RubyGems
  * Bundler
- * Rails 3
+ * Rails 3.0
  * MySQL 5.1
  * CouchDB
  * And of course PHV itself
 
+Please note that as of now, PHV is not tested with Ruby 1.9 and might not work
+with this version of Ruby. Likewise, Ruby on Rails versions earlier than 3.0.0
+are not supported.
+
 All commands need to be issued as root unless otherwise stated.
 
-First we need to install the following Debian packages:
+First we need to install a bunch of Debian packages using apt-get:
 
-	apt-get install git-core ruby1.8 rubygems1.8 couchdb mysql-server-5.1 libmysqlclient-dev
+	apt-get install git-core ruby1.8 rubygems1.8 couchdb mysql-server-5.1 \
+	                libmysqlclient-dev
 
-When installing the MySQL Server, the system will ask you (multiple times) to
+When installing the MySQL server, the system will ask you (multiple times) to
 choose a root password. Provide a password of your choice and write it down for
-later usage.
+later usage. If you know the implications, you can of course also choose to use
+an empty password.
 
-We will use "gem" to install additional Ruby libraries (gems). Those are
-installed to /var/lib/gems/1.8/bin. Because this location is not on our
-systems's path, and typing "/var/lib/gems/1.8/bin/rails" every time is
-tedious, we are going to add this location to our path:
+We will use _RubyGems_ to install additional Ruby libraries (gems). Those are
+installed to /var/lib/gems/1.8. Because this location is not on our systems's
+path, and typing "/var/lib/gems/1.8/bin/rails" every time is tedious, we are
+going to add this location to our path:
 
 	echo "export PATH=$PATH:/var/lib/gems/1.8/bin" >> /etc/profile
 	source /etc/profile
@@ -60,20 +68,20 @@ neccessary to start the PHV installation itself.
 
 The following steps describe how to get PHV running on your system. The
 installation location for PHV is up to you, for this tutorial I have choosen
-to install it to /opt/PlatformHealthViewer.
+to install it to _/opt/PlatformHealthViewer_.
 
-First, we need to get the latest version of the PHV source code:
+First, we need to get the latest stable version of the PHV source code:
 
 	cd /opt
 	git clone git://github.com/ManuelKiessling/PlatformHealthViewer.git
 
-Next, we have to make sure that all additional gems that PHV need will be
+Next, we have to make sure that all additional gems that PHV needs will be
 installed:
 
 	cd /opt/PlatformHealthViewer
 	bundle install
 
-If you choose to protect your MySQL installation with a password, you need to
+If you chose to protect your MySQL installation with a password, you need to
 configure this password in the database config file of PHV, using an editor of
 your choice (e.g. vi):
 
@@ -93,9 +101,48 @@ expected by running its unit tests:
 
 	rake test:units
 
-Everything went ok if the last line of the test output is
+Everything went ok if the last line of the test output reads
 
 	28 tests, 28 assertions, 0 failures, 0 errors
+
+Now is the time to start the rails application server:
+
+	rails s
+	
+This allows you to open the PHV application in your browser:
+
+http://_YourServersAddress_:3000/
+
+You will of course need to replace _YourServersAddress_ with the actual IP or
+DNS name of the server you installed PHV on.
+
+However, what you are going to see might probably be a bit disappointing,
+because after all you are shown an empty dashboard. This is because there
+hasn't been fed any data into PHV yet, which is why there a no graphs added
+to the dashboard that could represent any data.
+
+Read the next chapter to find out how to breath live into your PHV
+installation.
+
+
+## Adding demo data to your installation
+
+The easiest way to add data and visualizations to your PHV installation is to
+run a utility script that will feed randomized demo data into the server and
+add a graph to the dashboard representing this demo data.
+
+While still in _/opt/PlatformHealthViewer_ (or whatever location you chose to
+install PHV to), run
+
+	rake demodata:create
+
+This will take around 1 minute. Once finished, go back to your browser and
+refresh the current page. You will now see a graph on the Dashboard page and
+the demo events and tag on the Tageditor page.
+
+If you no longer need the demo data, you can remove it completely by issueing
+
+	rake demodata:remove
 
 
 ## Troubleshooting
@@ -103,4 +150,3 @@ Everything went ok if the last line of the test output is
 If you receive a "Errno::ECONNREFUSED" error message when opening PHV in your
 browser, then this is because CouchDB is not running or can't be connected.
 
-## TODO
