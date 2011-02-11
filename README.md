@@ -8,6 +8,9 @@ like to display the number of logins on your website as a line graph, all you
 need to do is to feed this data into the system using simple HTTP requests, and
 place a graph that represents this data on the dashboard with one simple click.
 
+There is a 10 minute long introduction video (in english, with subtitles) over
+at Youtube: http://www.youtube.com/watch?v=HI6SRqz_3D0
+
 The main design principle behind PHV is to make feeding data into the system
 and representing this data as graphs as straight forward as possible.
 
