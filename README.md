@@ -128,7 +128,7 @@ Read the next chapter to find out how to breath live into your PHV
 installation.
 
 
-## Adding demo data to your installation
+## Feeding demo data into your PHV server
 
 The easiest way to add data and visualizations to your PHV installation is to
 run a utility script that will feed randomized demo data into the server and
@@ -148,8 +148,20 @@ If you no longer need the demo data, you can remove it completely by issueing
 	rake demodata:remove
 
 
+## Feeding real data into your PHV server
+
+As mentioned above, the goal is to make feeding data into PHV as simple as
+possible, while allowing the data to come from whatever source you have.
+This is why I decided to use a simple, lightweight and very common protocol
+for pushing events into the PHV database: HTTP.
+
+This way, it's really simple to collect all the data you need. Issueing HTTP
+requests can be done from any Unix command line, using _curl_. Your programming
+environment of choice, like Rails or PHP, very likely allows you to make HTTP
+calls in a straight-forward manner.
+
+
 ## Troubleshooting
 
 If you receive a "Errno::ECONNREFUSED" error message when opening PHV in your
 browser, then this is because CouchDB is not running or can't be connected.
-
