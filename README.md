@@ -160,6 +160,57 @@ requests can be done from any Unix command line, using _curl_. Your programming
 environment of choice, like Java, Rails or PHP, very likely allows you to make
 HTTP calls in a straight-forward manner.
 
+As of now, only HTTP POST requests are supported. Still assuming that you have
+PHV running at http://_YourServersAddress_:3000/, you will need to make an HTTP
+POST request to
+
+	http://_YourServersAddress_:3000/queue_event
+
+with the following POST parameters:
+
+	event[source]
+	event[name]
+	event[value]
+
+On the Linux command line, one way to easily create HTTP POST requests is by
+using _curl_.
+
+_curl_ is a versatile unix command line tool to create any kind of HTTP
+request. It's available on all major platforms. On Debian GNU/Linux, you can
+install it with
+
+	apt-get install curl
+
+A typical _curl_ command line with a valid PHV request would look like this:
+
+	curl --data "event[value]=0.4&event[source]=myhost&event[name]=cpu_load" http://_YourServersAddress_:3000/queue_event
+
+As noted in the introduction, you don't need to do any upfront configuration in
+order to push new data into the system. As long as you can reach your PHV
+system with HTTP, you can push into the system whatever you like (right, as of
+now, there isn't any kind of authentication either).
+
+Ok, let's try a real world example. If you followed the installation section
+above, you will have PHV running on a Debian GNU/Linux 6.0 system. What about
+collecting and visualizing this system's CPU load within PHV?
+
+All we need is a way to make HTTP POST requests as explained above, and of
+course we need to get the actual CPU load value. Let's use good old _uptime_
+for this:
+
+	root@debian:~# uptime
+	 05:10:10 up  6:53,  4 users,  load average: 0.10, 0.04, 0.01
+
+We want to grab the 1 minute average (0.10 in the above example), which we will
+get using some cut magic:
+
+	root@debian:~# uptime | cut -b 46-49
+	0.10
+
+Great, that will do for now. Let's build a working _curl_ command line:
+
+	
+
 
 ## Troubleshooting
 
