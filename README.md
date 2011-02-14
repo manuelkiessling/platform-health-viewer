@@ -157,8 +157,8 @@ for pushing events into the PHV database: HTTP.
 
 This way, it's really simple to collect all the data you need. Issueing HTTP
 requests can be done from any Unix command line, using _curl_. Your programming
-environment of choice, like Rails or PHP, very likely allows you to make HTTP
-calls in a straight-forward manner.
+environment of choice, like Java, Rails or PHP, very likely allows you to make
+HTTP calls in a straight-forward manner.
 
 
 ## Troubleshooting
