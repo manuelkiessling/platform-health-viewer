@@ -116,6 +116,9 @@ This allows you to open the PHV application in your browser:
 
 http://_YourServersAddress_:3000/
 
+(If at this point you receive a "Errno::ECONNREFUSED" error message, then this
+is because CouchDB is not running or can't be connected).
+
 You will of course need to replace _YourServersAddress_ with the actual IP or
 DNS name of the server you installed PHV on.
 
@@ -164,7 +167,7 @@ As of now, only HTTP POST requests are supported. Still assuming that you have
 PHV running at http://_YourServersAddress_:3000/, you will need to make an HTTP
 POST request to
 
-	http://_YourServersAddress_:3000/queue_event
+http://YourServersAddress:3000/queue_event
 
 with the following POST parameters:
 
@@ -183,7 +186,8 @@ install it with
 
 A typical _curl_ command line with a valid PHV request would look like this:
 
-	curl --data "event[value]=0.4&event[source]=myhost&event[name]=cpu_load" http://_YourServersAddress_:3000/queue_event
+	curl --data "event[value]=0.4&event[source]=myhost&event[name]=cpu_load" \
+	            http://YourServersAddress:3000/queue_event
 
 As noted in the introduction, you don't need to do any upfront configuration in
 order to push new data into the system. As long as you can reach your PHV
@@ -209,10 +213,86 @@ get using some cut magic:
 
 Great, that will do for now. Let's build a working _curl_ command line:
 
-	
+	curl --data "event[value]=`uptime | \
+	 cut -b 46-49`&event[source]=debian&event[name]=cpu_load" \
+	 http://localhost:3000/queue_event
+
+As you can see, I decided to name this event's source _debian_ - you can choose
+a different name of course.
+
+Ok, now we pushed one event into the PHV server, but if you reload
+http://_YourServersAddress_:3000/ in your browser, you won't see any events
+with a source name _debian_ in the _All event types_ box.
+
+This is because new events that are pushed into PHV are only queued for further
+processing to speed up event insertion. To make them available in the _Tag
+editor_ (and to subsequentially visualize them on the dashboard), you need to
+"convert" them to their final location in the database.
+
+This is done using the following command:
+
+	rake queue:convert
+
+If afterwards you reload the Tag editor page in your browser, you will see the
+_debian cpu_load_ entry in the _All event types_ box.
+
+The _curl_ command line plus the rake task is all you need to make data
+available within PHV. You are completely free to feed any value (as long as
+it's a float) from any system into your PHV server, as long as you can provide
+a command line that produces the intended event value, and as long as the
+system you are pushing the events from is able to connect to your PHV server
+via HTTP.
+
+In practice you will probably want to push the event values of a system into
+PHV continuously - you can use _watch_ or a cronjob for this purpose:
+
+	watch -n 5 'curl --data "event[value]=`uptime | \
+	 cut -b 46-49`&event[source]=debian&event[name]=cpu_load" \
+	 http://localhost:3000/queue_event'
+
+will feed the current CPU load into PHV every five seconds, while a crontab
+like
+
+	* * * * *	nobody	curl --data "event[value]=`uptime | cut -b 46-49`&event[source]=debian&event[name]=cpu_load" http://localhost:3000/queue_event
+
+will feed that value every minute.
 
 
-## Troubleshooting
+## Event Agents
 
-If you receive a "Errno::ECONNREFUSED" error message when opening PHV in your
-browser, then this is because CouchDB is not running or can't be connected.
+As of now, PHV really is about providing an "event-type and event-source
+agnostic" platform, which is why collecting event values and pushing them into
+PHV is very much up to you - which gives you great flexibility, but might be
+cumbersome.
+
+This might or might not change with future versions, but after all, PHV will
+always have to stick to common and simple agents (CPU load, free disk space,
+web site load time etc.) when providing agents itself. It's the pain-free
+process of adding and visualizing highly specific data (that only _your_
+application/website generates and only _you_ need to have visualized) where
+PHV tries to help.
+
+However, a very basic set of common agents are already available in the
+
+	script/agents/
+
+folder. Feel free to have a look. To feed the different, for example, the
+different CPU performance indicators of your Mac into a PHV server running at
+_YourServersAddress:3000_, simply call
+
+	bash script/agents/macosx/cpu_overview_percent.sh http://localhost:3000/ macbook
+
+from your Mac's Terminal. There is a similar agent script for Linux systems.
+
+
+## Contributing & Getting in touch
+
+I would love to receive feedback, feature requests, bug reports, and of course
+pull requests for PHV.
+
+Add issues at https://github.com/ManuelKiessling/PlatformHealthViewer/issues or
+fork on Github using
+https://github.com/ManuelKiessling/PlatformHealthViewer/fork
+
+You can reach me at manuel@kiessling.net, or follow me on Twitter
+@manuelkiessling
